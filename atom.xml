@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>赵兴磊Blog</title>
+  
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+  <updated>2020-06-15T08:34:57.440Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>Schoder</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>java</title>
+    <link href="http://yoursite.com/2020/06/15/java/"/>
+    <id>http://yoursite.com/2020/06/15/java/</id>
+    <published>2020-06-15T08:34:57.000Z</published>
+    <updated>2020-06-15T08:34:57.440Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+</feed>
