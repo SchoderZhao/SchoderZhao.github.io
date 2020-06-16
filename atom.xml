@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://schoderzhao.github.io/"/>
-  <updated>2020-06-16T09:24:49.373Z</updated>
+  <updated>2020-06-16T09:34:25.158Z</updated>
   <id>https://schoderzhao.github.io/</id>
   
   <author>
@@ -21,16 +21,15 @@
     <link href="https://schoderzhao.github.io/2020/06/16/git%E4%BD%BF%E7%94%A8/"/>
     <id>https://schoderzhao.github.io/2020/06/16/git%E4%BD%BF%E7%94%A8/</id>
     <published>2020-06-16T08:55:30.409Z</published>
-    <updated>2020-06-16T09:24:49.373Z</updated>
+    <updated>2020-06-16T09:34:25.158Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="git使用"><a href="#git使用" class="headerlink" title="git使用"></a>git使用</h1><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="git.jpg" alt="Image text" title="">                </div>                <div class="image-caption">Image text</div>            </figure>]]></content>
+    <content type="html"><![CDATA[<h1 id="git使用"><a href="#git使用" class="headerlink" title="git使用"></a>git使用</h1><h2 id="git-基本操作"><a href="#git-基本操作" class="headerlink" title="git 基本操作"></a>git 基本操作</h2><p>1、创建一个项目</p><p>2、打开项目   在项目目录下右键单击–打开 git bash</p><p>3、初始化项目仓库   创建项目仓库</p><p>命令 ：   git init</p><p>git config –global user.name &lt;名字&gt; ———&gt;:配置用户名</p><p>git config –global user.email &lt;邮箱&gt;———&gt;：配置邮箱</p><p>git config –list ———&gt;：查看配置信息</p><p>git config –global user.name  ———&gt;：查看用户名</p><p>git config –global user.email ——–&gt; :查看邮箱</p><p>git status  查看文件是否被git管理</p><p>4、添加文件   </p><p>  git add 文件名   一次只能添加一个文件</p><p>  全部添加 ：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add .&#x2F;--all&#x2F;-A&#x2F;*</span><br></pre></td></tr></table></figure><p>5、提交</p><p>   git commit -m”日志描述”</p><p>6、项目文件内容如果有变动  先 git add . 再 git commit -m”日志”</p><p>7、git log 查看项目日志</p><p>8、回退操作  </p><p>  git reset –hard 前六位编码</p><p>9、恢复手动删除的文件  git checkout 提交生成码 文件名</p><h2 id="分支操作-："><a href="#分支操作-：" class="headerlink" title="分支操作 ："></a>分支操作 ：</h2><p>1、查看分支  git branch</p><p>2、创建分支  git branch 分支名</p><p>3、切换分支  git checkout 分支名</p><p>4、删除分支  git branch -d 分支名</p><p>5、合并分支  git merge  分支名</p><p>多人协作开发(接下来用张三、李四、CTO三人来演示工作中的流程)：</p><p>1、张三克隆文件：git clone &lt;地址&gt; 文件夹名称</p><p>2、李四克隆文件：git clone &lt;地址&gt; 文件夹名称</p><p>3、张三在开发过程中需要解决BUG</p><p>4、李四在开发过程中需要开发新的功能</p><h2 id="张三解决BUG并提交文件："><a href="#张三解决BUG并提交文件：" class="headerlink" title="张三解决BUG并提交文件："></a>张三解决BUG并提交文件：</h2><p>1、创建子分支：git branch zhangsan</p><p>2、切换子分支：git checkout zhangsan</p><p>3、提交到暂存区：git add index.html</p><p>4、提交到版本库：git commit -m “张三提交”</p><p>5、关联远程分支：git push –set-upstream origin zhangsan (这一步只需第一次的时候这样做即可，第二次修改文件的时候就可以直接执行第6步)</p><p>6、提交文件：git push</p><h2 id="CTO合并文件："><a href="#CTO合并文件：" class="headerlink" title="CTO合并文件："></a>CTO合并文件：</h2><p>1、更新本地的分支：git fetch –all</p><p>2、切换子分支：git checkout zhangsan</p><p>3、切换主分支：git checkout master</p><p>4、合并文件：git merge zhangsan   (：wq 按下回车)</p><p>5、提交到远端：git push</p><p>6、删除子分支：git checkout -d zhangsan  (不需要操作 )</p><h2 id="李四开发新的功能，但是李四的文件还是以前有bug的文件，因此我们需要最新的代码："><a href="#李四开发新的功能，但是李四的文件还是以前有bug的文件，因此我们需要最新的代码：" class="headerlink" title="李四开发新的功能，但是李四的文件还是以前有bug的文件，因此我们需要最新的代码："></a>李四开发新的功能，但是李四的文件还是以前有bug的文件，因此我们需要最新的代码：</h2><p>1、创建并切换子分支：git checkout -b lisi</p><p>fle</p><p>2、将开发好的新功能提交到版本库：git add index.html    git commit -m “李四提交”</p><p>3、切换主分支：git checkout master</p><p>4、将远端最新的代码拉取下来：git pull</p><p>5、切换子分支：git checkout lisi</p><p>6、合并主分支文件：git merge master</p><p>7、退出文件：esc 输入wq</p><p>8、提交到远端：git push –set-upstream origin lisi</p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h1 id=&quot;git使用&quot;&gt;&lt;a href=&quot;#git使用&quot; class=&quot;headerlink&quot; title=&quot;git使用&quot;&gt;&lt;/a&gt;git使用&lt;/h1&gt;&lt;figure class=&quot;image-bubble&quot;&gt;
-                &lt;div class=&quot;img
+        &lt;h1 id=&quot;git使用&quot;&gt;&lt;a href=&quot;#git使用&quot; class=&quot;headerlink&quot; title=&quot;git使用&quot;&gt;&lt;/a&gt;git使用&lt;/h1&gt;&lt;h2 id=&quot;git-基本操作&quot;&gt;&lt;a href=&quot;#git-基本操作&quot; class=&quot;headerlink&quot; titl
       
     
     </summary>
