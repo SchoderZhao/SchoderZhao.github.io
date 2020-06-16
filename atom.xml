@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://schoderzhao.github.io/"/>
-  <updated>2020-06-16T09:08:14.850Z</updated>
+  <updated>2020-06-16T09:18:21.595Z</updated>
   <id>https://schoderzhao.github.io/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="https://schoderzhao.github.io/2020/06/16/git%E4%BD%BF%E7%94%A8/"/>
     <id>https://schoderzhao.github.io/2020/06/16/git%E4%BD%BF%E7%94%A8/</id>
     <published>2020-06-16T08:55:30.409Z</published>
-    <updated>2020-06-16T09:08:14.850Z</updated>
+    <updated>2020-06-16T09:18:21.595Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="git使用"><a href="#git使用" class="headerlink" title="git使用"></a>git使用</h1><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="git使用/git.jpg" alt="Image text" title="">                </div>                <div class="image-caption">Image text</div>            </figure>]]></content>
+    <content type="html"><![CDATA[<h1 id="git使用"><a href="#git使用" class="headerlink" title="git使用"></a>git使用</h1><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="../git使用/git.jpg" alt="Image text" title="">                </div>                <div class="image-caption">Image text</div>            </figure>]]></content>
     
     <summary type="html">
     
