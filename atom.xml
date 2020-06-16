@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-06-15T08:34:57.440Z</updated>
+  <updated>2020-06-16T08:44:13.216Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Maven中scope标签作用</title>
+    <link href="http://yoursite.com/2020/06/16/Maven%E4%B8%ADscope%E6%A0%87%E7%AD%BE%E4%BD%9C%E7%94%A8/"/>
+    <id>http://yoursite.com/2020/06/16/Maven%E4%B8%ADscope%E6%A0%87%E7%AD%BE%E4%BD%9C%E7%94%A8/</id>
+    <published>2020-06-16T08:41:12.055Z</published>
+    <updated>2020-06-16T08:44:13.216Z</updated>
+    
+    <content type="html"><![CDATA[<hr><p>title: Maven中scope标签作用<br>date: 2020-06-16 16:41:11</p><h2 id="tags-maven"><a href="#tags-maven" class="headerlink" title="tags:maven"></a>tags:maven</h2><h1 id="Maven中scope标签作用"><a href="#Maven中scope标签作用" class="headerlink" title="Maven中scope标签作用"></a>Maven中scope标签作用</h1><h3 id="scope-是用来限制-dependency-的作用范围的，影响-maven-项目在各个生命周期时导入的-package-的状态，主要管理依赖的部署。"><a href="#scope-是用来限制-dependency-的作用范围的，影响-maven-项目在各个生命周期时导入的-package-的状态，主要管理依赖的部署。" class="headerlink" title="scope 是用来限制 dependency 的作用范围的，影响 maven 项目在各个生命周期时导入的 package 的状态，主要管理依赖的部署。"></a>scope 是用来限制 dependency 的作用范围的，影响 maven 项目在各个生命周期时导入的 package 的状态，主要管理依赖的部署。</h3><h2 id="scope-的作用范围："><a href="#scope-的作用范围：" class="headerlink" title="scope 的作用范围："></a>scope 的作用范围：</h2><p>（1）compile：默认值，适用于所有阶段（表明该 jar 包在编译、运行以及测试中路径均可见），并且会随着项目一起发布。</p><p>（2）test：只在测试时使用，用于编译和运行测试代码，不会随项目发布。</p><p>（3）runtime：无需参与项目的编译，不过后期的测试和运行周期需要其参与，与 compile 相比，跳过了编译。如 JDBC 驱动，适用运行和测试阶段。</p><p>（4）provided：编译和测试时有效，但是该依赖在运行时由服务器提供，并且打包时也不会被包含进去。如 servlet-api。</p><p>（5）system：类似 provided，需要显式提供包含依赖的jar，不会从 maven 仓库下载，而是从本地文件系统获取，需要添加 systemPath 的属性来定义路径。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;hr&gt;
+&lt;p&gt;title: Maven中scope标签作用&lt;br&gt;date: 2020-06-16 16:41:11&lt;/p&gt;
+&lt;h2 id=&quot;tags-maven&quot;&gt;&lt;a href=&quot;#tags-maven&quot; class=&quot;headerlink&quot; title=&quot;tags:mav
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
   
   <entry>
     <title>java</title>
