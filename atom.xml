@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://schoderzhao.github.io/"/>
-  <updated>2020-06-16T09:39:55.491Z</updated>
+  <updated>2020-06-17T02:54:33.719Z</updated>
   <id>https://schoderzhao.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Spring事务传播行为种类</title>
+    <link href="https://schoderzhao.github.io/2020/06/17/Spring%E4%BA%8B%E5%8A%A1%E4%BC%A0%E6%92%AD%E8%A1%8C%E4%B8%BA%E7%A7%8D%E7%B1%BB/"/>
+    <id>https://schoderzhao.github.io/2020/06/17/Spring%E4%BA%8B%E5%8A%A1%E4%BC%A0%E6%92%AD%E8%A1%8C%E4%B8%BA%E7%A7%8D%E7%B1%BB/</id>
+    <published>2020-06-17T02:33:11.398Z</published>
+    <updated>2020-06-17T02:54:33.719Z</updated>
+    
+    <content type="html"><![CDATA[<hr><p>title: Spring事务传播行为种类<br>date: 2020-06-17 10:33:11</p><h2 id="tags-Sprig"><a href="#tags-Sprig" class="headerlink" title="tags:Sprig"></a>tags:Sprig</h2><p>##Spring在TransactionDefinition接口中规定了7种类型的事务传播行为，它们规定了事务方法和事务方法发生嵌套调用时事务如何进行传播：</p><table><thead><tr><th>事务传播行为类型</th><th>说明</th></tr></thead><tbody><tr><td>PROPAGATION_REQUIRED</td><td>如果当前没有事务，就新建一个事务，如果已经存在一个事务中，加入到这个事务中。这是最常见的选择。</td></tr><tr><td>PROPAGATION_SUPPORTS</td><td>支持当前事务，如果当前没有事务，就以非事务方式执行。</td></tr><tr><td>PROPAGATION_MANDATORY</td><td>使用当前的事务，如果当前没有事务，就抛出异常。</td></tr><tr><td>PROPAGATION_REQUIRES_NEW</td><td>新建事务，如果当前存在事务，把当前事务挂起。</td></tr><tr><td>PROPAGATION_NOT_SUPPORTED</td><td>以非事务方式执行操作，如果当前存在事务，就把当前事务挂起。</td></tr><tr><td>PROPAGATION_NEVER</td><td>以非事务方式执行，如果当前存在事务，则抛出异常。</td></tr><tr><td>PROPAGATION_NESTED</td><td>如果当前存在事务，则在嵌套事务内执行。如果当前没有事务，则执行与PROPAGATION_REQUIRED类似的操作。</td></tr></tbody></table><p>当使用PROPAGATION_NESTED时，底层的数据源必须基于JDBC 3.0，并且实现者需要支持保存点事务机制。</p><p>@Transactional(propagation=Propagation.REQUIRED) 事务传播行为种类（注解方式）</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;hr&gt;
+&lt;p&gt;title: Spring事务传播行为种类&lt;br&gt;date: 2020-06-17 10:33:11&lt;/p&gt;
+&lt;h2 id=&quot;tags-Sprig&quot;&gt;&lt;a href=&quot;#tags-Sprig&quot; class=&quot;headerlink&quot; title=&quot;tags:Spri
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
   
   <entry>
     <title>git使用</title>
