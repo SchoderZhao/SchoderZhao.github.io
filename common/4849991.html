@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>java公共组件 : 14.钉钉群自定义机器人报警工具</title>
+        <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body class="theme-default aui-theme-default">
+        <div id="page">
+            <div id="main" class="aui-page-panel">
+                <div id="main-header">
+                    <div id="breadcrumb-section">
+                        <ol id="breadcrumbs">
+                            <li class="first">
+                                <span><a href="index.html">java公共组件</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="1409212.html">java公共组件</a></span>
+                            </li>
+                                                </ol>
+                    </div>
+                    <h1 id="title-heading" class="pagetitle">
+                                                <span id="title-text">
+                            java公共组件 : 14.钉钉群自定义机器人报警工具
+                        </span>
+                    </h1>
+                </div>
+
+                <div id="content" class="view">
+                    <div class="page-metadata">
+                        
+        
+    
+        
+    
+        
+        
+            Created by <span class='author'> 用户 -cb15a</span>, last modified by <span class='editor'> 赵兴磊</span> on 五月 06, 2022
+                        </div>
+                    <div id="main-content" class="wiki-content group">
+                    <p>一、群聊机器人添加</p><p>1.点击群设置 &gt; 群智能助手</p><p><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image confluence-thumbnail" height="250" src="attachments/4849991/4849992.png" data-image-src="attachments/4849991/4849992.png" data-unresolved-comment-count="0" data-linked-resource-id="4849992" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="image2021-10-19_16-47-1.png" data-base-url="http://wiki.itjcloud.com" data-linked-resource-content-type="image/png" data-linked-resource-container-id="4849991" data-linked-resource-container-version="9"></span></p><p>2.点击添加机器人</p><p><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image confluence-thumbnail" height="250" src="attachments/4849991/4849993.png" data-image-src="attachments/4849991/4849993.png" data-unresolved-comment-count="0" data-linked-resource-id="4849993" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="image2021-10-19_16-47-26.png" data-base-url="http://wiki.itjcloud.com" data-linked-resource-content-type="image/png" data-linked-resource-container-id="4849991" data-linked-resource-container-version="9"></span></p><p>3.点击自定义 &gt; 添加</p><p><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image" height="250" src="attachments/4849991/4849995.png" data-image-src="attachments/4849991/4849995.png" data-unresolved-comment-count="0" data-linked-resource-id="4849995" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="image2021-10-19_16-48-7.png" data-base-url="http://wiki.itjcloud.com" data-linked-resource-content-type="image/png" data-linked-resource-container-id="4849991" data-linked-resource-container-version="9"></span></p><p>4.设置机器人名字和限制的IP，IP填写项目所在服务器的实际IP &gt; 点击创建</p><p><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image" height="250" src="attachments/4849991/4849996.png" data-image-src="attachments/4849991/4849996.png" data-unresolved-comment-count="0" data-linked-resource-id="4849996" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="image2021-10-19_16-49-17.png" data-base-url="http://wiki.itjcloud.com" data-linked-resource-content-type="image/png" data-linked-resource-container-id="4849991" data-linked-resource-container-version="9"></span></p><p>5.创建完成后即可获得 webhook，是这个机器人的地址，用于参数的配置</p><p><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image" height="250" src="attachments/4849991/4849998.png" data-image-src="attachments/4849991/4849998.png" data-unresolved-comment-count="0" data-linked-resource-id="4849998" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="image2021-10-19_16-50-35.png" data-base-url="http://wiki.itjcloud.com" data-linked-resource-content-type="image/png" data-linked-resource-container-id="4849991" data-linked-resource-container-version="9"></span></p><p><br/></p><p>二、项目引入依赖</p><p>maven</p><pre><span style="color: rgb(232,191,106);">&lt;dependency&gt;<br/></span><span style="color: rgb(232,191,106);">    &lt;groupId&gt;</span>com.itjcloud.common<span style="color: rgb(232,191,106);">&lt;/groupId&gt;<br/></span><span style="color: rgb(232,191,106);">    &lt;artifactId&gt;</span>common-alert<span style="color: rgb(232,191,106);">&lt;/artifactId&gt;<br/></span><span style="color: rgb(232,191,106);">    &lt;version&gt;<strong style="">正式版<a class="external-link" href="https://gitee.com/yuezhix/itjcloud-common/releases" rel="nofollow" style="text-decoration: none;">https://gitee.com/yuezhix/itjcloud-common/releases</a> (使用正式版)</strong></span><span style="color: rgb(232,191,106);">&lt;/version&gt;<br/></span><span style="color: rgb(232,191,106);">&lt;/dependency&gt;</span></pre><p>gradle</p><pre>implementation <span style="color: rgb(106,135,89);">&quot;com.itjcloud.common:common-alert:<strong style="">正式版<a class="external-link" href="https://gitee.com/yuezhix/itjcloud-common/releases" rel="nofollow" style="text-decoration: none;">https://gitee.com/yuezhix/itjcloud-common/releases</a> (使用正式版)</strong>&quot;<br/><br/></span></pre><p>三、项目中在配置文件处配置参数</p><pre><span style="color: rgb(204,120,50);">com</span>:<br/>  <span style="color: rgb(204,120,50);">itjcloud</span>:<br/>    <span style="color: rgb(204,120,50);">alert</span>:<br/>      <span style="color: rgb(204,120,50);">webhook</span>: 步骤一中获得的webhook<br/>      <span style="color: rgb(204,120,50);">env</span>: 环境名称<br/>      <span style="color: rgb(204,120,50);">allowAlarm</span>: true为开启报警通知，false为关闭通知</pre><p>四、项目中在需要的地方传参调用</p><p>1.通过<span style="color: rgb(187,181,41);">@Autowired</span>引入</p><pre><span style="color: rgb(187,181,41);">@Autowired<br/></span>DingTalkUtil <span style="color: rgb(152,118,170);">dingTalkUtil</span><span style="color: rgb(204,120,50);">;</span><br/><br/>启动类上需要配置</pre><pre><span style="color: rgb(187,181,41);">@ComponentScan</span>(basePackages={<span style="color: rgb(106,135,89);">&quot;本项目包名&quot;</span><span style="color: rgb(204,120,50);">,</span><span style="color: rgb(106,135,89);">&quot;com.itjcloud.common.alert&quot;</span>})</pre><pre><br/>2.在业务代码中使用</pre><pre><span style="color: rgb(128,128,128);">//</span><span style="color: rgb(128,128,128);">报警名称<br/></span>String title = <span style="color: rgb(106,135,89);">&quot;</span><span style="color: rgb(106,135,89);">业务异常</span><span style="color: rgb(106,135,89);">&quot;</span><span style="color: rgb(204,120,50);">;</span><span style="color: rgb(204,120,50);"><br/></span><span style="color: rgb(128,128,128);">//</span><span style="color: rgb(128,128,128);">异常信息<br/></span>String message = <span style="color: rgb(106,135,89);">&quot;Errors occurred while build effective model from C:</span><span style="color: rgb(204,120,50);">\\</span><span style="color: rgb(106,135,89);">Users</span><span style="color: rgb(204,120,50);">\\</span><span style="color: rgb(106,135,89);">dell</span><span style="color: rgb(204,120,50);">\\</span><span style="color: rgb(106,135,89);">.gradle</span><span style="color: rgb(204,120,50);">\\</span><span style="color: rgb(106,135,89);">caches</span><span style="color: rgb(204,120,50);">\\</span><span style="color: rgb(106,135,89);">modules-2</span><span style="color: rgb(204,120,50);">\\</span><span style="color: rgb(106,135,89);">files-2.1</span><span style="color: rgb(204,120,50);">\\</span><span style="color: rgb(106,135,89);">log4j</span><span style="color: rgb(204,120,50);">\\</span><span style="color: rgb(106,135,89);">log4j</span><span style="color: rgb(204,120,50);">\\</span><span style="color: rgb(106,135,89);">1.2.15</span><span style="color: rgb(204,120,50);">\\</span><span style="color: rgb(106,135,89);">1483490805e8f86c21240958629905e733d079eb</span><span style="color: rgb(204,120,50);">\\</span><span style="color: rgb(106,135,89);">log4j-1.2.15.pom:</span><span style="color: rgb(204,120,50);">\n</span><span style="color: rgb(106,135,89);">&quot; </span>+<br/>        <span style="color: rgb(106,135,89);">&quot;    'build.plugins.plugin[io.spring.gradle.dependencymanagement.org.apache.maven.plugins:maven-antrun-plugin].dependencies.dependency.scope' for junit:junit:jar must be one of [compile, runtime, system] but is 'test'. in log4j:log4j:1.2.15&quot;</span><span style="color: rgb(204,120,50);">;</span><span style="color: rgb(204,120,50);"><br/></span><span style="color: rgb(128,128,128);">//@</span><span style="color: rgb(128,128,128);">通知人集合<br/></span>List&lt;String&gt; atList = <span style="color: rgb(204,120,50);">new </span>ArrayList&lt;&gt;()<span style="color: rgb(204,120,50);">;<br/></span><span style="color: rgb(128,128,128);">//</span><span style="color: rgb(128,128,128);">通知人手机号，如果是空集合就</span><span style="color: rgb(128,128,128);">@</span><span style="color: rgb(128,128,128);">全体，如果传</span><span style="color: rgb(128,128,128);">null</span><span style="color: rgb(128,128,128);">就不</span><span style="color: rgb(128,128,128);">@<br/></span>atList.add(<span style="color: rgb(106,135,89);">&quot;18565585195&quot;</span>)<span style="color: rgb(204,120,50);">;<br/></span>atList.add(<span style="color: rgb(106,135,89);">&quot;13210541698&quot;</span>)<span style="color: rgb(204,120,50);">;<br/></span><span style="color: rgb(128,128,128);">//</span><span style="color: rgb(128,128,128);">调用方法<br/></span></pre><pre><span style="color: rgb(152,118,170);">dingTalkUtil</span>.sendMsgToDingDing(title<span style="color: rgb(204,120,50);">,</span>message<span style="color: rgb(204,120,50);">,</span>atList)<span style="color: rgb(204,120,50);">;</span></pre><p><br/></p><p>效果如图***********************************************************************************</p><p><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image confluence-thumbnail" height="250" src="attachments/4849991/4850000.png" data-image-src="attachments/4849991/4850000.png" data-unresolved-comment-count="0" data-linked-resource-id="4850000" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="image2021-10-19_16-59-47.png" data-base-url="http://wiki.itjcloud.com" data-linked-resource-content-type="image/png" data-linked-resource-container-id="4849991" data-linked-resource-container-version="9"></span></p>
+                    </div>
+
+                                                            <div class="pageSection group">
+                        <div class="pageSectionHeader">
+                            <h2 id="attachments" class="pageSectionTitle">Attachments:</h2>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/4849991/4849992.png">image2021-10-19_16-47-1.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/4849991/4849993.png">image2021-10-19_16-47-26.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/4849991/4849994.png">image2021-10-19_16-47-53.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/4849991/4849995.png">image2021-10-19_16-48-7.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/4849991/4849996.png">image2021-10-19_16-49-17.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/4849991/4849997.png">image2021-10-19_16-50-7.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/4849991/4849998.png">image2021-10-19_16-50-35.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/4849991/4849999.png">image2021-10-19_16-58-54.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/4849991/4850000.png">image2021-10-19_16-59-47.png</a> (image/png)
+                                <br/>
+                                                    </div>
+                    </div>
+                    
+                                                      
+                </div>             </div> 
+            <div id="footer" role="contentinfo">
+                <section class="footer-body">
+                    <p>Document generated by Confluence on 八月 30, 2022 17:10</p>
+                    <div id="footer-logo"><a href="http://www.atlassian.com/">Atlassian</a></div>
+                </section>
+            </div>
+        </div>     </body>
+</html>

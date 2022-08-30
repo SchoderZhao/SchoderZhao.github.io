@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>java公共组件 : 业务项目配置文件问题</title>
+        <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body class="theme-default aui-theme-default">
+        <div id="page">
+            <div id="main" class="aui-page-panel">
+                <div id="main-header">
+                    <div id="breadcrumb-section">
+                        <ol id="breadcrumbs">
+                            <li class="first">
+                                <span><a href="index.html">java公共组件</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="4850016.html">公共组件项目问题</a></span>
+                            </li>
+                                                </ol>
+                    </div>
+                    <h1 id="title-heading" class="pagetitle">
+                                                <span id="title-text">
+                            java公共组件 : 业务项目配置文件问题
+                        </span>
+                    </h1>
+                </div>
+
+                <div id="content" class="view">
+                    <div class="page-metadata">
+                        
+        
+    
+        
+    
+        
+        
+            Created by <span class='author'> 赵兴磊</span>, last modified on 十月 20, 2021
+                        </div>
+                    <div id="main-content" class="wiki-content group">
+                    <h2 id="id-业务项目配置文件问题-问题"><strong>问题</strong></h2><p>微服务是基于Spring Cloud框架搭建的，Spring Cloud Config作为服务配置中心。<br/>业务服务只配置服务名称、启用环境和config的URL地址，其他都配置在配置中心，例如服务端口、服务注册中心地址等。可在开发环境（dev）、测试环境（test）和生产环境（prod）分别配置。<br/>所以预想的启动流程是：先加载配置文件，再启动服务。<br/>添加配置文件：bootstrap.properties或者bootstrap.yml。<br/><br/></p><p>项目使用springboot<span style="color: rgb(23,43,77);">2.5.4</span></p><p><span style="color: rgb(77,77,77);">从Spring Boot 2.4版本开始，配置文件加载方式进行了重构。bootstrap将不在加载   所以公共组件添加了依赖 <strong><span style="color: rgb(255,0,0);">业务项目不用管已经集成好 </span></strong></span></p><pre>api <span style="color: rgb(6,125,23);">'org.springframework.cloud:spring-cloud-starter-bootstrap'</span></pre><p><br/></p><p><span style="color: rgb(77,77,77);">Spring Cloud Config作为服务配置中心    版本<span style="color: rgb(23,43,77);">2020.0.3     uri会有默认值<a class="external-link" href="http://localhost:8888" rel="nofollow">http://localhost:8888</a>如下图    所以当不配置  nacos下的config时会报错</span></span></p><p><span style="color: rgb(77,77,77);"><span class="confluence-embedded-file-wrapper"><img class="confluence-embedded-image confluence-external-resource" src="https://img-blog.csdnimg.cn/20210512190311433.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzI3Mjc4MQ==,size_16,color_FFFFFF,t_70" data-image-src="https://img-blog.csdnimg.cn/20210512190311433.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzI3Mjc4MQ==,size_16,color_FFFFFF,t_70"></span></span></p><h2 id="id-业务项目配置文件问题-解决"><span style="color: rgb(255,0,0);"><strong>解决</strong></span></h2><h3 id="id-业务项目配置文件问题-1.所有项目修改配置文件名为bootstrap.yml"><span style="color: rgb(77,77,77);">1. 所有项目修改配置文件名为bootstrap.yml</span></h3><p><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image" height="59" src="attachments/4850019/4850021.png" data-image-src="attachments/4850019/4850021.png" data-unresolved-comment-count="0" data-linked-resource-id="4850021" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="image2021-10-20_10-9-45.png" data-base-url="http://wiki.itjcloud.com" data-linked-resource-content-type="image/png" data-linked-resource-container-id="4850019" data-linked-resource-container-version="3"></span></p><h3 id="id-业务项目配置文件问题-2.添加config配置(强制)具体配置项配置到nacos">2.添加config配置 (强制) 具体配置项配置到nacos</h3><p><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image confluence-thumbnail" height="250" src="attachments/4850019/4850022.png" data-image-src="attachments/4850019/4850022.png" data-unresolved-comment-count="0" data-linked-resource-id="4850022" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="image2021-10-20_10-10-54.png" data-base-url="http://wiki.itjcloud.com" data-linked-resource-content-type="image/png" data-linked-resource-container-id="4850019" data-linked-resource-container-version="3"></span></p><p><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image" height="250" src="attachments/4850019/4850023.png" data-image-src="attachments/4850019/4850023.png" data-unresolved-comment-count="0" data-linked-resource-id="4850023" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="image2021-10-20_10-12-18.png" data-base-url="http://wiki.itjcloud.com" data-linked-resource-content-type="image/png" data-linked-resource-container-id="4850019" data-linked-resource-container-version="3"></span></p><h3 id="id-业务项目配置文件问题-3.如果暂时不想配置到nacos上修改configenabled:false">3.如果暂时不想配置到nacos上修改config enabled:false</h3><pre><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image" height="250" src="attachments/4850019/4850024.png" data-image-src="attachments/4850019/4850024.png" data-unresolved-comment-count="0" data-linked-resource-id="4850024" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="image2021-10-20_10-13-41.png" data-base-url="http://wiki.itjcloud.com" data-linked-resource-content-type="image/png" data-linked-resource-container-id="4850019" data-linked-resource-container-version="3"></span></pre><p><br/></p>
+                    </div>
+
+                                                            <div class="pageSection group">
+                        <div class="pageSectionHeader">
+                            <h2 id="attachments" class="pageSectionTitle">Attachments:</h2>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/4850019/4850021.png">image2021-10-20_10-9-45.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/4850019/4850022.png">image2021-10-20_10-10-54.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/4850019/4850023.png">image2021-10-20_10-12-18.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/4850019/4850024.png">image2021-10-20_10-13-41.png</a> (image/png)
+                                <br/>
+                                                    </div>
+                    </div>
+                    
+                                                      
+                </div>             </div> 
+            <div id="footer" role="contentinfo">
+                <section class="footer-body">
+                    <p>Document generated by Confluence on 八月 30, 2022 17:10</p>
+                    <div id="footer-logo"><a href="http://www.atlassian.com/">Atlassian</a></div>
+                </section>
+            </div>
+        </div>     </body>
+</html>

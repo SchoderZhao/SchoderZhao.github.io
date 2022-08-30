@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>java公共组件 : 4.后端数据校验common_validation</title>
+        <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body class="theme-default aui-theme-default">
+        <div id="page">
+            <div id="main" class="aui-page-panel">
+                <div id="main-header">
+                    <div id="breadcrumb-section">
+                        <ol id="breadcrumbs">
+                            <li class="first">
+                                <span><a href="index.html">java公共组件</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="1409212.html">java公共组件</a></span>
+                            </li>
+                                                </ol>
+                    </div>
+                    <h1 id="title-heading" class="pagetitle">
+                                                <span id="title-text">
+                            java公共组件 : 4.后端数据校验common_validation
+                        </span>
+                    </h1>
+                </div>
+
+                <div id="content" class="view">
+                    <div class="page-metadata">
+                        
+        
+    
+        
+    
+        
+        
+            Created by <span class='author'> 赵兴磊</span>, last modified on 九月 23, 2021
+                        </div>
+                    <div id="main-content" class="wiki-content group">
+                    <h2 id="id-4.后端数据校验common_validation-Common-validation">Common-validation </h2><p>目录结构</p><p><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image" height="428" width="554" src="attachments/65721/65720.png" data-image-src="attachments/65721/65720.png" data-unresolved-comment-count="0" data-linked-resource-id="65720" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="worddav32e8af644d952279708d10efd746f350.png" data-base-url="http://wiki.itjcloud.com" data-linked-resource-content-type="image/png" data-linked-resource-container-id="65721" data-linked-resource-container-version="7"></span></p><h2 id="id-4.后端数据校验common_validation-用法"><span style="letter-spacing: 0.0px;">用法</span></h2><h4 id="id-4.后端数据校验common_validation-快速失败"><span style="letter-spacing: 0.0px;">快速失败</span></h4><p>validation全局默认配置，多个验证规则不满足时，只要第一个不满足验证条件就立即失败返回前台，不会在进行接下来的验证。</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">@Configuration
+public class ValidationConfig
+{
+    @Bean
+    public Validator validator() {
+        ValidatorFactory validatorFactory = Validation.byProvider(HibernateValidator.class)
+                .configure()
+                .failFast(true)
+                .buildValidatorFactory();
+        return validatorFactory.getValidator();
+    }
+}</pre>
+</div></div><h4 id="id-4.后端数据校验common_validation-正则表达式常量"><span style="letter-spacing: 0.0px;">正则表达式常量</span></h4><p>ValidRegexpConstant包含多种正则验证常量，使用@Pattern进行正则验证</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">/**
+* 手机号
+*/
+@NotBlank(message = &quot;手机号不可以为空&quot;, groups = {SaveGroup.class, UpdateGroup.class})
+@Pattern(regexp = ValidRegexpConstant.PHONE_REGEXP, message = &quot;手机号录入有误&quot;, groups = {SaveGroup.class, UpdateGroup.class})
+private String mobile;</pre>
+</div></div><h4 id="id-4.后端数据校验common_validation-自定义验证"><span style="letter-spacing: 0.0px;">自定义验证</span></h4><p>自定义验证主要用于取状态值验证，例如性别使用int类型1, 2代表男和女，不能出现其他的值。</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">/**
+ * 性别
+ */
+@EnumValue(intValues = {1,2}, message = &quot;性别参数不正确&quot;, groups = {SaveGroup.class, UpdateGroup.class})
+private Integer sex;</pre>
+</div></div><p><br/>如果性别使用字符&quot;男&quot;&quot;女&quot;，则如下</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">/**
+ * 性别
+ */
+@EnumValue(strValues = {&quot;男&quot;,&quot;女&quot;}, message = &quot;性别参数不正确&quot;, groups = {SaveGroup.class, UpdateGroup.class})
+private Integer sex;</pre>
+</div></div><h4 id="id-4.后端数据校验common_validation-分组验证"><span style="letter-spacing: 0.0px;">分组验证</span></h4><p>Common中提供了接口SaveGroup、UpdateGroup、UpdateStateGroup、<br/>BaseGroup、OtherGroup，如果还需要增加新的分组，增加一个空接口即可</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">public interface OtherGroup {
+}</pre>
+</div></div><h4 id="id-4.后端数据校验common_validation-其他用法"><span style="letter-spacing: 0.0px;">其他用法</span></h4><p>参考<span class="nobr"><a class="external-link" href="https://docs.qq.com/doc/DU2N2dWhlV3VKUExP" rel="nofollow">https://docs.qq.com/doc/DU2N2dWhlV3VKUExP<sup><img class="rendericon" src="http://123.60.101.254:18010/images/icons/linkext7.gif" height="7" width="7" align="absmiddle" alt="" border="0"/></sup></a></span></p>
+                    </div>
+
+                                                            <div class="pageSection group">
+                        <div class="pageSectionHeader">
+                            <h2 id="attachments" class="pageSectionTitle">Attachments:</h2>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/65721/65720.png">worddav32e8af644d952279708d10efd746f350.png</a> (image/png)
+                                <br/>
+                                                    </div>
+                    </div>
+                    
+                                                      
+                </div>             </div> 
+            <div id="footer" role="contentinfo">
+                <section class="footer-body">
+                    <p>Document generated by Confluence on 八月 30, 2022 17:10</p>
+                    <div id="footer-logo"><a href="http://www.atlassian.com/">Atlassian</a></div>
+                </section>
+            </div>
+        </div>     </body>
+</html>

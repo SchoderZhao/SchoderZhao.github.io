@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>java公共组件 : 1.如何添加自己的子系统</title>
+        <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body class="theme-default aui-theme-default">
+        <div id="page">
+            <div id="main" class="aui-page-panel">
+                <div id="main-header">
+                    <div id="breadcrumb-section">
+                        <ol id="breadcrumbs">
+                            <li class="first">
+                                <span><a href="index.html">java公共组件</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="1409212.html">java公共组件</a></span>
+                            </li>
+                                                </ol>
+                    </div>
+                    <h1 id="title-heading" class="pagetitle">
+                                                <span id="title-text">
+                            java公共组件 : 1.如何添加自己的子系统
+                        </span>
+                    </h1>
+                </div>
+
+                <div id="content" class="view">
+                    <div class="page-metadata">
+                        
+        
+    
+        
+    
+        
+        
+            Created by <span class='author'> 赵兴磊</span>, last modified on 五月 31, 2022
+                        </div>
+                    <div id="main-content" class="wiki-content group">
+                    <h3 id="id-1.如何添加自己的子系统-第一步新建微服务子系统gradle项目">第一步  新建微服务子系统 gradle项目</h3><p>参考: </p><p><strong><span style="color: rgb(64,72,91);">通用公共组件多服务模板</span></strong> <a class="external-link" href="https://gitee.com/yuezhix/itjcloud-common-moudles-service" rel="nofollow">https://gitee.com/yuezhix/itjcloud-common-moudles-service</a><br class="atl-forced-newline"/>修改build.gradle (私服下载依赖已配置)</p><p><br class="atl-forced-newline"/>引入核心组件<br/><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image" height="126" width="554" src="attachments/65729/65728.png" data-image-src="attachments/65729/65728.png" data-unresolved-comment-count="0" data-linked-resource-id="65728" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="worddav0c5d6db1b54a970a8cfeae6c4a56c18a.png" data-base-url="http://wiki.itjcloud.com" data-linked-resource-content-type="image/png" data-linked-resource-container-id="65729" data-linked-resource-container-version="27"></span> <br class="atl-forced-newline"/>业务服务里面根据自己所需引入依赖 <br class="atl-forced-newline"/><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image" height="160" width="554" src="attachments/65729/65730.png" data-image-src="attachments/65729/65730.png" data-unresolved-comment-count="0" data-linked-resource-id="65730" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="worddav4cbecdde606277af838a45ff6e79264e.png" data-base-url="http://wiki.itjcloud.com" data-linked-resource-content-type="image/png" data-linked-resource-container-id="65729" data-linked-resource-container-version="27"></span></p><p><span style="color: rgb(64,72,91);"><strong>通用公共组件单服务 模板</strong> <a class="external-link" href="https://gitee.com/yuezhix/itjcloud-common-service" rel="nofollow">https://gitee.com/yuezhix/itjcloud-common-service</a></span></p><p> 修改build.gradle (私服下载依赖已配置)</p><p><strong>也可以在gitee创建项目时选择模板创建</strong></p><p><strong><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image" height="400" src="attachments/65729/8782081.png" data-image-src="attachments/65729/8782081.png" data-unresolved-comment-count="0" data-linked-resource-id="8782081" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="image2021-11-25_14-4-38.png" data-base-url="http://wiki.itjcloud.com" data-linked-resource-content-type="image/png" data-linked-resource-container-id="65729" data-linked-resource-container-version="27"></span></strong></p><p><br/></p><h3 id="id-1.如何添加自己的子系统-第二步引入核心组件common-core">第二步 引入核心组件common-core </h3><p>业务服务里面根据自己所需引入依赖   <a href="1409212.html">java公共组件各组件说明</a></p><h3 id="id-1.如何添加自己的子系统-第三步Mybatisplus自动填充"><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image" height="211" src="attachments/65729/65931.png" data-image-src="attachments/65729/65931.png" data-unresolved-comment-count="0" data-linked-resource-id="65931" data-linked-resource-version="2" data-linked-resource-type="attachment" data-linked-resource-default-alias="image2021-9-17_9-30-33.png" data-base-url="http://wiki.itjcloud.com" data-linked-resource-content-type="image/png" data-linked-resource-container-id="65729" data-linked-resource-container-version="27"></span><br class="atl-forced-newline"/><br class="atl-forced-newline"/>第三步 Mybatisplus自动填充</h3><p>由于各个业务服务除通用字段外其他自动填充字段不确定 在新建的服务中要新建一个<span style="color: rgb(255,0,0);"><strong>ContentMetaObjectHandler</strong></span>继承公共组件的<span style="color: rgb(255,0,0);"><strong>MyMetaObjectHandler</strong></span>  <span style="color: rgb(255,0,0);">不符合要求的话自行重写填充数据</span><br/><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image" height="220" width="554" src="attachments/65729/65731.png" data-image-src="attachments/65729/65731.png" data-unresolved-comment-count="0" data-linked-resource-id="65731" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="worddav422bbac33bea6cb1c568c9032cf1ae98.png" data-base-url="http://wiki.itjcloud.com" data-linked-resource-content-type="image/png" data-linked-resource-container-id="65729" data-linked-resource-container-version="27"></span></p><p>代码↓↓↓↓↓↓</p><div class="code panel pdl" style="border-width: 1px;">
+ <div class="codeHeader panelHeader pdl hide-border-bottom">
+  <b class="code-title"></b>
+  <span class="collapse-source expand-control" style="display:none;"><span class="expand-control-icon icon">&nbsp;</span><span class="expand-control-text">展开源码</span></span>
+  <span class="collapse-spinner-wrapper"></span>
+ </div>
+ <div class="codeContent panelContent pdl hide-toolbar"> 
+  <pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: true; theme: Emacs; collapse: true" data-theme="Emacs">
+
+import com.itjcloud.common.configure.MyMetaObjectHandler;
+import com.itjcloud.common.security.starter.entity.User;
+import com.itjcloud.common.security.starter.util.ItjCloudSecurityUtil;
+import org.apache.ibatis.reflection.MetaObject;
+import org.springframework.stereotype.Component;
+
+import java.util.Date;
+
+/**
+ * 功能描述: 默认字段自动填充
+ *
+ * @date 2022/1/17
+ */
+@Component
+public class ContentMetaObjectHandler extends MyMetaObjectHandler {
+
+
+    /**
+     * 实现方式：创建一个对象的时候就不需要直接去填充或者set创建时间和更新时间了，这里直接自动填充
+     *
+     * @param metaObject 实体类
+     */
+    @Override
+    public void insertFill(MetaObject metaObject) {
+        Date date = new Date();
+        this.strictInsertFill(metaObject, "createTime", Date.class, date);
+        this.strictInsertFill(metaObject, "updateTime", Date.class, date);
+
+        if (null != ItjCloudSecurityUtil.getCurrentUser()) {
+            User user = ItjCloudSecurityUtil.getCurrentUser();
+            //strictInsertFill方法  当属性有值是此处不会覆盖掉
+            this.strictInsertFill(metaObject, "createUserId", Long.class, user.getId());
+            this.strictInsertFill(metaObject, "createUserName", String.class, user.getRealName());
+            this.strictInsertFill(metaObject, "updateUserId", Long.class, user.getId());
+            this.strictInsertFill(metaObject, "updateUserName", String.class, user.getRealName());
+        } else {
+            //上面四个参数可以为空  此处可以自行选择是否填充
+        }
+    }
+
+    /**
+     * 实现方式：每次更新对象的时候不需要去填充或者set，这里直接自动填充，只针对更新时间
+     *
+     * @param metaObject 实体类
+     */
+    @Override
+    public void updateFill(MetaObject metaObject) {
+        this.setFieldValByName("updateTime", new Date(), metaObject);
+        if (null != ItjCloudSecurityUtil.getCurrentUser()) {
+            User user = ItjCloudSecurityUtil.getCurrentUser();
+            this.strictUpdateFill(metaObject, "updateUserId", Long.class, user.getId());
+            this.strictUpdateFill(metaObject, "updateUserName", String.class, user.getRealName());
+        } else {
+         //上面两个参数可以为空  此处可以自行选择是否填充
+        }
+
+    }
+}
+
+</pre> 
+ </div>
+</div><p> <br class="atl-forced-newline"/><br class="atl-forced-newline"/>建表时需要添加默认字段详情参考:<a href="65991.html">10.数据库默认字段以及唯一索引说明</a></p><h3 id="id-1.如何添加自己的子系统-第四步租户隔离">第四步 租户隔离</h3><p><a href="8786201.html">租户隔离</a></p><h3 id="id-1.如何添加自己的子系统-第五步服务间调用fegin">第五步 服务间调用fegin   </h3><p>需要权限的必须携带token  添加下方配置 要不报401</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Emacs" data-theme="Emacs">import feign.RequestInterceptor;
+import feign.RequestTemplate;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Objects;
+
+@Component
+public class FeignConfig implements RequestInterceptor {
+    @Override
+    public void apply(RequestTemplate requestTemplate) {
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = attributes.getRequest();
+        //排除saas总后台     不需要追加token(用户体系不一样)
+        if (&quot;saas-cloud&quot;.equals(requestTemplate.feignTarget().name())){
+            return;
+        }
+		//排除一些开放的接口  不需要带token   当前请求的uri
+        if (!Objects.equals(request.getRequestURI(), &quot;/xx/xx&quot;)) {
+		return;
+        }
+		//或者当前调用的feign路径
+     // if (Objects.equals(requestTemplate.url(), &quot;/ImSendManage/extrusionLineMessage&quot;)){
+      //return;
+    //}
+            //添加token
+            requestTemplate.header(&quot;Authorization&quot;, request.getHeader(&quot;Authorization&quot;));
+            requestTemplate.header(&quot;GatewayToken&quot;, request.getHeader(&quot;GatewayToken&quot;));
+        
+    }
+}</pre>
+</div></div><p><br/></p><h3 id="id-1.如何添加自己的子系统-第六步cosid配置">第六步  cosid配置</h3><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: yml; gutter: false; theme: FadeToGrey" data-theme="FadeToGrey">  spring:
+   redis:
+      database: 13
+      host: 124.71.178.170
+      port: 6379
+      password: bS6XD8kpwysb
+      lettuce:
+        pool:
+          min-idle: 8
+          max-idle: 500
+          max-active: 2000
+          max-wait: 10000
+      timeout: 5000
+
+
+cosid:
+  namespace: ${spring.application.name}
+  snowflake:
+    enabled: true
+    clock-backwards:
+      spin-threshold: 10      #主动等待同步策略 spinThreshold(默认值 10 毫秒) 用于设置自旋等待阈值， 当大于spinThreshold 时使用线程休眠等待时钟同步
+      broken-threshold: 2000  #如果超过brokenThreshold(默认值 2 秒)时会直接抛出ClockTooManyBackwardsException异常
+    machine:
+      distributor:
+        type: redis
+      state-storage:
+        local:
+          state-location: ./cosid-machine-state/
+    share:
+      clock-sync: true</pre>
+</div></div><p><br/></p><p><br/></p>
+                    </div>
+
+                                                            <div class="pageSection group">
+                        <div class="pageSectionHeader">
+                            <h2 id="attachments" class="pageSectionTitle">Attachments:</h2>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/65729/65728.png">worddav0c5d6db1b54a970a8cfeae6c4a56c18a.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/65729/65730.png">worddav4cbecdde606277af838a45ff6e79264e.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/65729/65731.png">worddav422bbac33bea6cb1c568c9032cf1ae98.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/65729/65732.png">worddav17357ecb4dd842f1620ea9f1ba3f1fa9.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/65729/8797411.png">image2021-9-17_9-30-33.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/65729/8782081.png">image2021-11-25_14-4-38.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/65729/65931.png">image2021-9-17_9-30-33.png</a> (image/png)
+                                <br/>
+                                                    </div>
+                    </div>
+                    
+                                                      
+                </div>             </div> 
+            <div id="footer" role="contentinfo">
+                <section class="footer-body">
+                    <p>Document generated by Confluence on 八月 30, 2022 17:10</p>
+                    <div id="footer-logo"><a href="http://www.atlassian.com/">Atlassian</a></div>
+                </section>
+            </div>
+        </div>     </body>
+</html>
