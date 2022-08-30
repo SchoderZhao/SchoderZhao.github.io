@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>java公共组件 : 19. 分页工具文档</title>
+        <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body class="theme-default aui-theme-default">
+        <div id="page">
+            <div id="main" class="aui-page-panel">
+                <div id="main-header">
+                    <div id="breadcrumb-section">
+                        <ol id="breadcrumbs">
+                            <li class="first">
+                                <span><a href="index.html">java公共组件</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="1409212.html">java公共组件</a></span>
+                            </li>
+                                                </ol>
+                    </div>
+                    <h1 id="title-heading" class="pagetitle">
+                                                <span id="title-text">
+                            java公共组件 : 19. 分页工具文档
+                        </span>
+                    </h1>
+                </div>
+
+                <div id="content" class="view">
+                    <div class="page-metadata">
+                        
+        
+    
+        
+    
+        
+        
+            Created by <span class='author'> 张印港</span>, last modified by <span class='editor'> 赵兴磊</span> on 十二月 02, 2021
+                        </div>
+                    <div id="main-content" class="wiki-content group">
+                    <h2 id="1-分页工具文档">1. 分页工具文档</h2> 
+<blockquote> 
+ <p>分页对象为结合mybatis-plus 进行分页排序</p> 
+</blockquote> 
+<h2 id="分页对象类">分页对象类</h2> 
+<pre><code class="language-java">//分页对象类
+class ItjPageRequest&lt;T&gt; implements PageRequest&lt;T&gt;{
+  
+}
+
+//分页对象接口
+interface PageRequest&lt;T&gt; extends Serializable {
+  
+  
+}
+</code></pre> 
+<h2 id="分页对象使用">分页对象使用</h2> 
+<pre><code class="language-java">&#64;PostMapping(&#34;/getList&#34;)
+public Result&lt;IPage&lt;ApplicationVO&gt;&gt; getList( &#64;Validated(SelectGroup.class)  &#64;RequestBody  ItjPageRequest&lt;ApplicationBO&gt; param) {
+  return null;
+}
+</code></pre> 
+<blockquote> 
+ <p>如果对单边操作,结合mybatis-plus可以 通过前端传入排序字段任意排序, 如果不适用mybatis-plus 自定义sql功能需要自己实现</p> 
+</blockquote> 
+<ul><li>请求示例</li></ul> 
+<pre><code class="language-json"> {
+   &#34;size&#34;: 10,   //每页条数  默认为10
+   &#34;current&#34;: 1, //页      默认为1
+   &#34;orders&#34;: [ //排序对象   
+     {
+       &#34;column&#34;: &#34;&#34;,   //需要排序的字段
+       &#34;asc&#34;: true     //排序方式  默认为ture asc
+     }
+   ],
+   &#34;data&#34;: {}     //需要传递的数据,在后端表现为泛型
+ }
+</code></pre> 
+<ul><li>分页对象方法</li></ul> 
+<pre><code class="language-java">//把分页对象转换为mybatis plus 分页对象
+Page&lt;T&gt; toPage() ;
+//转换分页对象的泛型
+&lt;R&gt; PageRequest&lt;R&gt; convert(Function&lt;? super T, ? extends R&gt; mapper)
+</code></pre><script>
+AJS.$('[data-macro-name="markdown"] code').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+</script><style>
+.hljs {display: inline;}
+pre > code {display: block !important;}
+</style>
+                    </div>
+
+                                        
+                                                        <div class="pageSection group">
+                        <div class="pageSectionHeader">
+                            <h2 id="comments" class="pageSectionTitle">Comments:</h2>
+                        </div>
+
+                        <table border="0" width="100%">
+                                                        <tr>
+                                <td >
+                                    <a name="comment-8785174"></a>
+                                    <font class="smallfont"><p><span style="color: rgb(0,0,0);"> {</span><br/><span style="color: rgb(0,0,0);">   </span><span style="color: rgb(163,21,21);">&quot;size&quot;</span><span style="color: rgb(0,0,0);">: </span><span style="color: rgb(9,134,88);">10</span><span style="color: rgb(0,0,0);">,</span><br/><span style="color: rgb(0,0,0);">   </span><span style="color: rgb(163,21,21);">&quot;current&quot;</span><span style="color: rgb(0,0,0);">: </span><span style="color: rgb(9,134,88);">1</span><span style="color: rgb(0,0,0);">,</span><br/><span style="color: rgb(0,0,0);">   </span><span style="color: rgb(163,21,21);">&quot;orders&quot;</span><span style="color: rgb(0,0,0);">: [</span><br/><span style="color: rgb(0,0,0);">     {</span><br/><span style="color: rgb(0,0,0);">       </span><span style="color: rgb(163,21,21);">&quot;column&quot;</span><span style="color: rgb(0,0,0);">: </span><span style="color: rgb(4,81,165);">&quot;&quot;</span><span style="color: rgb(0,0,0);">,</span><br/><span style="color: rgb(0,0,0);">       </span><span style="color: rgb(163,21,21);">&quot;asc&quot;</span><span style="color: rgb(0,0,0);">: </span><span style="color: rgb(4,81,165);">true</span><br/><span style="color: rgb(0,0,0);">     }</span><br/><span style="color: rgb(0,0,0);">   ],</span><br/><span style="color: rgb(0,0,0);">   </span><span style="color: rgb(163,21,21);">&quot;data&quot;</span><span style="color: rgb(0,0,0);">: {}</span><br/><span style="color: rgb(0,0,0);"> }</span></p></font>
+                                    <div align="left" class="smallfont" style="color: #666666; width: 98%; margin-bottom: 10px;">
+                                        <img src="images/icons/contenttypes/comment_16.png" height="16" width="16" border="0" align="absmiddle"/>
+                                        Posted by benqing at 十二月 15, 2021 14:08
+                                    </div>
+                                </td>
+                            </tr>
+                                                    </table>
+                    </div>
+                                      
+                </div>             </div> 
+            <div id="footer" role="contentinfo">
+                <section class="footer-body">
+                    <p>Document generated by Confluence on 八月 30, 2022 17:10</p>
+                    <div id="footer-logo"><a href="http://www.atlassian.com/">Atlassian</a></div>
+                </section>
+            </div>
+        </div>     </body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>java公共组件 : 8.mapstruct BO,VO,DO, DTO转换工具</title>
+        <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body class="theme-default aui-theme-default">
+        <div id="page">
+            <div id="main" class="aui-page-panel">
+                <div id="main-header">
+                    <div id="breadcrumb-section">
+                        <ol id="breadcrumbs">
+                            <li class="first">
+                                <span><a href="index.html">java公共组件</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="1409212.html">java公共组件</a></span>
+                            </li>
+                                                </ol>
+                    </div>
+                    <h1 id="title-heading" class="pagetitle">
+                                                <span id="title-text">
+                            java公共组件 : 8.mapstruct BO,VO,DO, DTO转换工具
+                        </span>
+                    </h1>
+                </div>
+
+                <div id="content" class="view">
+                    <div class="page-metadata">
+                        
+        
+    
+        
+    
+        
+        
+            Created by <span class='author'> 王永超</span>, last modified by <span class='editor'> 赵兴磊</span> on 十二月 09, 2021
+                        </div>
+                    <div id="main-content" class="wiki-content group">
+                    <p><strong>注: 规范    <br/><span style="color: rgb(23,43,77);">VO（View Object）：显示层对象 默认生成除baseDO外的所有字段 根据自己的业务增删字段   <span style="color: rgb(255,0,0);"> (输出给前端)</span></span><br/><span style="color: rgb(23,43,77);">BO（Business Object）：业务对象 继承BaseBO 默认生成除baseDO外的所有字段 根据自己的业务增删字段  <span style="color: rgb(255,0,0);">(前端传入)</span></span></strong></p><p><strong><span style="color: rgb(23,43,77);">DTO: 作用在服务之间调用  (后端内部)    自定义</span></strong></p><p><strong>1.添加依赖<br/></strong></p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">dependencies {
+           implementation &quot;com.itjcloud.common:common-core:${itjcloudVersion}&quot; 
+
+ }</pre>
+</div></div><p><br/></p><p><span style="color: rgb(135,16,148);">内含mapstruct依赖<br/><br/><span style="color: rgb(0,0,0);"><strong>2.项目中的使用</strong></span></span></p><p>使用mapstruct的全攻略篇 <a class="external-link" href="https://blog.csdn.net/sinat_32787481/category_10647817.html" rel="nofollow">https://blog.csdn.net/sinat_32787481/category_10647817.html</a></p><p>我们用代码生成器生成的代码中，会默认携带convert这个类，我们使用时，直接注入此convert即可。</p><p>默认会携带四个方法</p><p><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image" height="400" src="attachments/65805/65807.png" data-image-src="attachments/65805/65807.png" data-unresolved-comment-count="0" data-linked-resource-id="65807" data-linked-resource-version="2" data-linked-resource-type="attachment" data-linked-resource-default-alias="image2021-9-15_20-0-11.png" data-base-url="http://wiki.itjcloud.com" data-linked-resource-content-type="image/png" data-linked-resource-container-id="65805" data-linked-resource-container-version="7"></span></p><p>一些常见的用法，可以自行在convert类中添加</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Emacs" data-theme="Emacs">    /**
+     * 默认会进行同名字段映射，还可以进行个性化字段映射以及忽略字段
+     * @param order
+     * @return
+     */
+    @Mappings(
+            {
+                    @Mapping(source = &quot;totalFee&quot;, target = &quot;total_fee&quot;,defaultValue = &quot;0.00&quot;),
+                    @Mapping(source = &quot;orderNumber&quot;, target = &quot;orderNumber&quot;,ignore = true),
+            }
+    )
+    OrderDTO do2dto(Order order);
+
+
+    /**
+     * do2dto的逆向映射
+     * @param orderDTO
+     * @return
+     */
+    @InheritInverseConfiguration(name = &quot;do2dto&quot;)
+    Order dto2do(OrderDTO orderDTO);
+
+
+    /**
+     * 更新现有bean
+     * @param order
+     * @param orderDTO
+     */
+    void updateDto( @MappingTarget Order order, OrderDTO orderDTO);
+
+    /**
+     * 更新现有集合
+     * @param orders
+     * @param orderDTOS
+     */
+    void updateDtos(@MappingTarget List&lt;Order&gt; orders,  List&lt;OrderDTO&gt; orderDTOS);
+
+
+    /**
+     * 多个对象映射到同一个对象
+     * @param item
+     * @param order
+     * @param seller
+     * @return
+     */
+    @Mappings(
+            {
+                    @Mapping(source = &quot;order.createTime&quot;, target = &quot;createTime&quot;, dateFormat = &quot;yyyy-MM-dd HH:mm:ss&quot;),
+                    @Mapping(source = &quot;seller.id&quot;, target = &quot;sellerDTO.sellerId&quot;),
+                    @Mapping(source = &quot;order.id&quot;, target = &quot;id&quot;),
+                    @Mapping(source = &quot;seller.sellerName&quot;, target = &quot;sellerDTO.sellerName&quot;)
+            }
+    )
+    OrderDTO orderAndItemAndSeller2dto(Item item, Order order, Seller seller);</pre>
+</div></div>
+                    </div>
+
+                                                            <div class="pageSection group">
+                        <div class="pageSectionHeader">
+                            <h2 id="attachments" class="pageSectionTitle">Attachments:</h2>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/65805/8788161.png">image2021-9-15_20-0-11.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/65805/65807.png">image2021-9-15_20-0-11.png</a> (image/png)
+                                <br/>
+                                                    </div>
+                    </div>
+                    
+                                                      
+                </div>             </div> 
+            <div id="footer" role="contentinfo">
+                <section class="footer-body">
+                    <p>Document generated by Confluence on 八月 30, 2022 17:10</p>
+                    <div id="footer-logo"><a href="http://www.atlassian.com/">Atlassian</a></div>
+                </section>
+            </div>
+        </div>     </body>
+</html>

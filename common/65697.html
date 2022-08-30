@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>java公共组件 : 5.redis的基本操作以及分布式锁使用</title>
+        <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body class="theme-default aui-theme-default">
+        <div id="page">
+            <div id="main" class="aui-page-panel">
+                <div id="main-header">
+                    <div id="breadcrumb-section">
+                        <ol id="breadcrumbs">
+                            <li class="first">
+                                <span><a href="index.html">java公共组件</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="1409212.html">java公共组件</a></span>
+                            </li>
+                                                </ol>
+                    </div>
+                    <h1 id="title-heading" class="pagetitle">
+                                                <span id="title-text">
+                            java公共组件 : 5.redis的基本操作以及分布式锁使用
+                        </span>
+                    </h1>
+                </div>
+
+                <div id="content" class="view">
+                    <div class="page-metadata">
+                        
+        
+    
+        
+    
+        
+        
+            Created by <span class='author'> admin</span>, last modified by <span class='editor'> 赵兴磊</span> on 五月 24, 2022
+                        </div>
+                    <div id="main-content" class="wiki-content group">
+                    <p><span style="color: rgb(255,0,0);"><strong>在需要使用分布式锁的服务添加依赖</strong></span><br/><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image" height="92" width="554" src="attachments/65697/65696.png" data-image-src="attachments/65697/65696.png" data-unresolved-comment-count="0" data-linked-resource-id="65696" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="worddav9a42b3473988be6363d0255a3d604259.png" data-base-url="http://wiki.itjcloud.com" data-linked-resource-content-type="image/png" data-linked-resource-container-id="65697" data-linked-resource-container-version="16"></span></p><p><br class="atl-forced-newline"/><span style="color: rgb(255,0,0);"><strong>！Nacos配置 spring下</strong></span><br/><br/></p><p>## 单节点模式</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: yml; gutter: false; theme: FadeToGrey" data-theme="FadeToGrey"> spring:
+    redis:
+      host: 121.36.195.180
+      port: 6379
+      password: itjcloud@2021
+      lettuce:
+        pool:
+          min-idle: 8
+          max-idle: 500
+          max-active: 2000
+          max-wait: 10000
+      connect-timeout: 50000</pre>
+</div></div><p><br/></p><p>### 集群模式</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeHeader panelHeader pdl" style="border-bottom-width: 1px;"><b>redis集群连接</b></div><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">  redis:
+    cluster:
+      nodes: 192.168.91.179:6000,192.168.91.179:6001,192.168.91.179:6002
+    password: dfvasd2343
+    lettuce:
+      pool:
+        min-idle: 8
+        max-idle: 500
+        max-active: 2000
+        max-wait: 10000
+    timeout: 5000
+</pre>
+</div></div><p><br/></p><p>如果需要用j2cache 可以看 <a href="65750.html">6.J2cache使用说明</a>, 因为redission不支持网络拓扑, 所以要把每个节点都放上</p><h1 id="id-5.redis的基本操作以及分布式锁使用-redis的基本操作"><span style="color: rgb(64,72,91);">redis的基本操作</span></h1><p><span style="color: rgb(64,72,91);">    使用</span>RedisService   <span style="color: rgb(0,51,179);">import </span><span style="color: rgb(0,0,0);">com.itjcloud.common.autoconfigure.itjlock.service.RedisService</span>;</p><p><span style="color: rgb(64,72,91);"><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image" height="126" src="attachments/65697/65941.png" data-image-src="attachments/65697/65941.png" data-unresolved-comment-count="0" data-linked-resource-id="65941" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="image2021-9-17_9-41-30.png" data-base-url="http://wiki.itjcloud.com" data-linked-resource-content-type="image/png" data-linked-resource-container-id="65697" data-linked-resource-container-version="16"></span></span></p><p><br/></p><p><span style="color: rgb(64,72,91);">  基本操作redis的方法</span></p><p><span style="color: rgb(64,72,91);"><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image" height="250" src="attachments/65697/65940.png" data-image-src="attachments/65697/65940.png" data-unresolved-comment-count="0" data-linked-resource-id="65940" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="image2021-9-17_9-40-51.png" data-base-url="http://wiki.itjcloud.com" data-linked-resource-content-type="image/png" data-linked-resource-container-id="65697" data-linked-resource-container-version="16"></span></span></p><h1 id="id-5.redis的基本操作以及分布式锁使用-分布式锁"><span style="color: rgb(64,72,91);">分布式锁</span></h1><p><span style="color: rgb(64,72,91);">在需要加分布式锁的方法上，添加注解@Itjlock</span><br/><span style="color: rgb(255,0,0);"><strong>根据自己的业务细度加锁(下图业务涉及到了id)       多个参数逗号分隔</strong></span></p><p><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image" height="163" src="attachments/65697/65741.png" data-image-src="attachments/65697/65741.png" data-unresolved-comment-count="0" data-linked-resource-id="65741" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="image2021-9-14_16-1-35.png" data-base-url="http://wiki.itjcloud.com" data-linked-resource-content-type="image/png" data-linked-resource-container-id="65697" data-linked-resource-container-version="16"></span></p><p><br/><span style="color: rgb(64,72,91);">支持锁指定的业务key，如同一个方法ID入参相同的加锁，其他的放行。业务key的获取支持Spel，具体使用方式如下</span></p><p>默认30秒0秒秒制默认30秒有看门狗机制10秒处理不完追加</p><p><br/><br class="atl-forced-newline"/><span style="color: rgb(51,51,51);">@Itjlock可以标注四个参数，作用分别如下 </span><br class="atl-forced-newline"/><span style="color: rgb(51,51,51);"><span style="color: rgb(64,72,91);"><strong>    </strong></span>name：lock的name，对应redis的key值。默认为：类名+方法名</span><br/><span style="color: rgb(51,51,51);"><span style="color: rgb(64,72,91);"><strong>    </strong></span>lockType：锁的类型，目前支持（可重入锁，公平锁，读写锁）。默认为：公平锁</span><br/><br/><span style="color: rgb(51,51,51);"><span style="color: rgb(64,72,91);"><strong>    </strong></span>lockTimeoutStrategy: 加锁超时的处理策略，可配置为不做处理、快速失败、阻塞等待的处理策略，默认策略为不做处理</span><br/><span style="color: rgb(51,51,51);"><span style="color: rgb(64,72,91);"><strong>    </strong></span>customLockTimeoutStrategy: 自定义加锁超时的处理策略，需指定自定义处理的方法的方法名，并保持入参一致。</span><br/><span style="color: rgb(51,51,51);"><span style="color: rgb(64,72,91);"><strong>    </strong></span>releaseTimeoutStrategy: 释放锁时，持有的锁已超时的处理策略，可配置为不做处理、快速失败的处理策略，默认策略为不做处理</span><br/><span style="color: rgb(51,51,51);"><span style="color: rgb(64,72,91);"><strong>    </strong></span>customReleaseTimeoutStrategy: 自定义释放锁时，需指定自定义处理的方法的方法名，并保持入参一致。</span></p><h3 id="id-5.redis的基本操作以及分布式锁使用-锁超时说明"><span style="color: rgb(64,72,91);"><strong>锁超时说明</strong></span></h3><p><span style="color: rgb(64,72,91);">    因为基于redis实现分布式锁，如果使用不当，会在以下场景下遇到锁超时的问题：</span></p><h3 id="id-5.redis的基本操作以及分布式锁使用-加锁超时处理策略(LockTimeoutStrategy)："><span style="color: rgb(64,72,91);">    加锁超时处理策略(<strong>LockTimeoutStrategy</strong>)：</span></h3><p><span style="color: rgb(64,72,91);"><strong>        NO_OPERATION</strong> 不做处理，继续执行业务逻辑</span></p><p><span style="color: rgb(64,72,91);"><strong>        FAIL_FAST</strong> 快速失败，会抛出ItjlockTimeoutException</span></p><p><span style="color: rgb(64,72,91);"><strong>        KEEP_ACQUIRE</strong> 阻塞等待，一直阻塞，直到获得锁，但在太多的尝试后，会停止获取锁并报错，此时很有可能是发生了死锁。</span></p><p><span style="color: rgb(64,72,91);"><strong>        自定义(customLockTimeoutStrategy)</strong> 需指定自定义处理的方法的方法名，并保持入参一致，指定自定义处理方法后，会覆盖上述三种策略，且会拦截业务逻辑的运行。</span></p><h3 id="id-5.redis的基本操作以及分布式锁使用-释放锁时超时处理策略(ReleaseTimeoutStrategy)："><span style="color: rgb(64,72,91);"><strong>    释放锁时超时处理策略(ReleaseTimeoutStrategy)：</strong></span></h3><p><span style="color: rgb(64,72,91);"><strong>        NO_OPERATION</strong> 不做处理，继续执行业务逻辑</span></p><p><span style="color: rgb(64,72,91);"><strong>        FAIL_FAST</strong> 快速失败，会抛出ItjlockTimeoutException</span></p><p><span style="color: rgb(64,72,91);"><strong>        自定义(customReleaseTimeoutStrategy)</strong> 需指定自定义处理的方法的方法名，并保持入参一致，指定自定义处理方法后，会覆盖上述两种策略, 执行自定义处理方法时，业务逻辑已经执行完毕，会在方法返回前和throw异常前执行。</span></p>
+                    </div>
+
+                                                            <div class="pageSection group">
+                        <div class="pageSectionHeader">
+                            <h2 id="attachments" class="pageSectionTitle">Attachments:</h2>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/65697/65696.png">worddav9a42b3473988be6363d0255a3d604259.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/65697/65698.png">worddav9b8e02f33360001c75861398c61e974e.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/65697/65699.png">worddavdf6d815ef542cdca6a529d5e269fc52b.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/65697/65741.png">image2021-9-14_16-1-35.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/65697/65940.png">image2021-9-17_9-40-51.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/65697/65941.png">image2021-9-17_9-41-30.png</a> (image/png)
+                                <br/>
+                                                    </div>
+                    </div>
+                    
+                                                      
+                </div>             </div> 
+            <div id="footer" role="contentinfo">
+                <section class="footer-body">
+                    <p>Document generated by Confluence on 八月 30, 2022 17:10</p>
+                    <div id="footer-logo"><a href="http://www.atlassian.com/">Atlassian</a></div>
+                </section>
+            </div>
+        </div>     </body>
+</html>

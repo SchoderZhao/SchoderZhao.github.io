@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>java公共组件 : 2.公共响应参数</title>
+        <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body class="theme-default aui-theme-default">
+        <div id="page">
+            <div id="main" class="aui-page-panel">
+                <div id="main-header">
+                    <div id="breadcrumb-section">
+                        <ol id="breadcrumbs">
+                            <li class="first">
+                                <span><a href="index.html">java公共组件</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="1409212.html">java公共组件</a></span>
+                            </li>
+                                                </ol>
+                    </div>
+                    <h1 id="title-heading" class="pagetitle">
+                                                <span id="title-text">
+                            java公共组件 : 2.公共响应参数
+                        </span>
+                    </h1>
+                </div>
+
+                <div id="content" class="view">
+                    <div class="page-metadata">
+                        
+        
+    
+        
+    
+        
+        
+            Created by <span class='author'> 赵兴磊</span>, last modified on 七月 26, 2022
+                        </div>
+                    <div id="main-content" class="wiki-content group">
+                    <h2 id="id-2.公共响应参数-公共响应参数">公共响应参数</h2><div class="table-wrap"><table class="wrapped confluenceTable"><colgroup><col/><col/><col/><col/><col/></colgroup><tbody><tr><th class="confluenceTh"><p><strong>参数</strong></p></th><th class="confluenceTh"><p><strong>类型</strong></p></th><th class="confluenceTh"><p><strong>是否必填</strong></p></th><th class="confluenceTh"><p><strong>描述</strong></p></th><th class="confluenceTh"><p><strong>示例值</strong></p></th></tr><tr><td class="confluenceTd"><p>code</p></td><td class="confluenceTd"><p>Int</p></td><td class="confluenceTd"><p>是</p></td><td class="confluenceTd"><p>返回码</p></td><td class="confluenceTd"><p>500</p></td></tr><tr><td class="confluenceTd"><p>msg</p></td><td class="confluenceTd"><p>String</p></td><td class="confluenceTd"><p>是</p></td><td class="confluenceTd"><p>描述</p></td><td class="confluenceTd"><p>系统内部异常</p></td></tr><tr><td class="confluenceTd"><p>data</p></td><td class="confluenceTd"><p>Json</p></td><td class="confluenceTd"><p>否</p></td><td class="confluenceTd"><p>返回数据</p></td><td class="confluenceTd"><p><br/></p></td></tr></tbody></table></div><p><br/></p><h2 id="id-2.公共响应参数-API公共错误码">API 公共错误码</h2><div class="table-wrap"><table class="wrapped confluenceTable"><colgroup><col/><col/><col/></colgroup><tbody><tr><td class="confluenceTd"><p><strong>code（返回码）</strong></p></td><td class="confluenceTd"><p><strong>浏览器状态码</strong></p></td><td class="confluenceTd"><p><strong>描述</strong></p></td></tr><tr><td class="confluenceTd"><p><strong>200</strong></p></td><td class="confluenceTd"><p><strong>200</strong></p></td><td class="confluenceTd"><p><span style="color: rgb(51,51,51);">接口调用成功</span></p></td></tr><tr><td class="confluenceTd"><p><strong>500</strong></p></td><td class="confluenceTd"><p><strong>200</strong></p></td><td class="confluenceTd"><p><span style="color: rgb(51,51,51);">业务异常</span></p></td></tr><tr><td class="confluenceTd"><p><strong>500</strong></p></td><td class="confluenceTd"><p><strong>500</strong></p></td><td class="confluenceTd"><p><span style="color: rgb(51,51,51);">系统内部异常</span></p></td></tr><tr><td class="confluenceTd"><p><strong>400</strong></p></td><td class="confluenceTd"><p><strong>200</strong></p></td><td class="confluenceTd"><p><span style="color: rgb(51,51,51);">参数错误</span></p></td></tr><tr><td class="confluenceTd"><p><strong>403</strong></p></td><td class="confluenceTd"><p><strong>403</strong></p></td><td class="confluenceTd"><p><span style="color: rgb(51,51,51);">资源无权限</span></p></td></tr><tr><td colspan="1" class="confluenceTd">401</td><td colspan="1" class="confluenceTd">401</td><td colspan="1" class="confluenceTd"><span style="color: rgb(51,51,51);">未经许可的请求</span></td></tr><tr><td colspan="1" class="confluenceTd">自定义</td><td colspan="1" class="confluenceTd">200</td><td colspan="1" class="confluenceTd">自定义错误</td></tr></tbody></table></div><h3 id="id-2.公共响应参数-其他">其他</h3><p>上述错误码如果不满足当前需求可以调用Result.other()自定义code</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Emacs" data-theme="Emacs">Result.other(&quot;自定义错误&quot;,&quot;数据&quot;,1000001)</pre>
+</div></div><h3 id="id-2.公共响应参数-后端controller层返回值com.itjcloud.common.result.Result_GoBack业务异常"><br class="atl-forced-newline"/><br class="atl-forced-newline"/>后端controller层返回值 com.itjcloud.common.result.Result <br class="atl-forced-newline"/><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image" height="124" width="554" src="attachments/65716/65715.png" data-image-src="attachments/65716/65715.png" data-unresolved-comment-count="0" data-linked-resource-id="65715" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="worddava97073111aad6ed68c7bd4a499d2e96b.png" data-base-url="http://wiki.itjcloud.com" data-linked-resource-content-type="image/png" data-linked-resource-container-id="65716" data-linked-resource-container-version="9"></span><span class="confluence-anchor-link" id="id-2.公共响应参数-_GoBack"></span> <br class="atl-forced-newline"/><br class="atl-forced-newline"/><br class="atl-forced-newline"/>业务异常</h3><p>业务异常主动抛出 com.itjcloud.common.exception.BaseServiceException;  <br class="atl-forced-newline"/><br class="atl-forced-newline"/><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image" height="228" width="554" src="attachments/65716/65717.png" data-image-src="attachments/65716/65717.png" data-unresolved-comment-count="0" data-linked-resource-id="65717" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="worddavf07b10c2e7d1b15f82c88a52e3ea5edd.png" data-base-url="http://wiki.itjcloud.com" data-linked-resource-content-type="image/png" data-linked-resource-container-id="65716" data-linked-resource-container-version="9"></span></p><p>如果业务需要抛出自定义错误码可以参考下方代码</p><p><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image" height="30" src="attachments/65716/4849878.png" data-image-src="attachments/65716/4849878.png" data-unresolved-comment-count="0" data-linked-resource-id="4849878" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="image2021-10-15_10-43-32.png" data-base-url="http://wiki.itjcloud.com" data-linked-resource-content-type="image/png" data-linked-resource-container-id="65716" data-linked-resource-container-version="9"></span></p>
+                    </div>
+
+                                                            <div class="pageSection group">
+                        <div class="pageSectionHeader">
+                            <h2 id="attachments" class="pageSectionTitle">Attachments:</h2>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/65716/65715.png">worddava97073111aad6ed68c7bd4a499d2e96b.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/65716/65717.png">worddavf07b10c2e7d1b15f82c88a52e3ea5edd.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/65716/4849878.png">image2021-10-15_10-43-32.png</a> (image/png)
+                                <br/>
+                                                    </div>
+                    </div>
+                    
+                                                      
+                </div>             </div> 
+            <div id="footer" role="contentinfo">
+                <section class="footer-body">
+                    <p>Document generated by Confluence on 八月 30, 2022 17:10</p>
+                    <div id="footer-logo"><a href="http://www.atlassian.com/">Atlassian</a></div>
+                </section>
+            </div>
+        </div>     </body>
+</html>

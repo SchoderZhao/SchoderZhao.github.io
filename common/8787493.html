@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>java公共组件 : 资源服务器对接(弃用)</title>
+        <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body class="theme-default aui-theme-default">
+        <div id="page">
+            <div id="main" class="aui-page-panel">
+                <div id="main-header">
+                    <div id="breadcrumb-section">
+                        <ol id="breadcrumbs">
+                            <li class="first">
+                                <span><a href="index.html">java公共组件</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="4854222.html">解决方案</a></span>
+                            </li>
+                                                </ol>
+                    </div>
+                    <h1 id="title-heading" class="pagetitle">
+                                                <span id="title-text">
+                            java公共组件 : 资源服务器对接(弃用)
+                        </span>
+                    </h1>
+                </div>
+
+                <div id="content" class="view">
+                    <div class="page-metadata">
+                        
+        
+    
+        
+    
+        
+        
+            Created by <span class='author'> 赵兴磊</span>, last modified on 七月 04, 2022
+                        </div>
+                    <div id="main-content" class="wiki-content group">
+                    <h3 class="auto-cursor-target" id="id-资源服务器对接(弃用)-登陆流程">登陆流程</h3><p><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image" width="850" src="attachments/8787493/8789584.png" data-image-src="attachments/8787493/8789584.png" data-unresolved-comment-count="0" data-linked-resource-id="8789584" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="image2022-2-8_8-57-33.png" data-base-url="http://wiki.itjcloud.com" data-linked-resource-content-type="image/png" data-linked-resource-container-id="8787493" data-linked-resource-container-version="37"></span></p><p><br/></p><h3 class="auto-cursor-target" id="id-资源服务器对接(弃用)-1.接口对接例子">1.接口对接例子  </h3><p class="auto-cursor-target"><a class="external-link" href="http://192.168.90.163:7700/#/share/je24ozLJ" rel="nofollow">http://192.168.90.163:7700/#/share/je24ozLJ</a>  接口文档</p><p class="auto-cursor-target"><span style="color: rgb(255,0,0);"><strong>以下为后端例子</strong></span></p><h3 class="auto-cursor-target" id="id-资源服务器对接(弃用)-2.引入依赖">2.引入依赖   </h3><p class="auto-cursor-target">版本 <span style="color: rgb(6,125,23);"><span style="color: rgb(0,0,0);"> 正式版 <a class="external-link" href="https://gitee.com/yuezhix/itjcloud-common/releases" rel="nofollow">https://gitee.com/yuezhix/itjcloud-common/releases</a></span></span></p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Emacs" data-theme="Emacs">implementation &quot;com.itjcloud.common:common-security-starter:最新版&quot;</pre>
+</div></div><h3 class="auto-cursor-target" id="id-资源服务器对接(弃用)-3.yml配置下列属性">3.yml配置下列属性</h3><p><br/></p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: yml; gutter: false; theme: Emacs" data-theme="Emacs">itjcloud:
+  cloud:
+    security:
+      only-fetch-by-gateway: false   #是否只能通过网关获取资源 线上环境要用true  方便开发 暂时false
+      enable: true    #是否开启安全配置
+      authUri: /**    #配置需要认证的uri，默认为所有/**
+      anonUris: /test      #免认证资源路径，支持通配符 多个值时使用逗号分隔
+security:
+  oauth2:
+    resource:
+      id: ${spring.application.name}
+      user-info-uri: http://192.168.90.163:8301/auth/user      #认证服务器地址(开发)
+      #user-info-uri: http://124.71.198.113:8301/auth/user      #认证服务器地址(测试)自己机器编写代码不要改成这个</pre>
+</div></div><p><br/></p><h3 id="id-资源服务器对接(弃用)-4.启动类添加">4.启动类添加</h3><p><span style="color: rgb(158,136,13);">@EnableItjCloudResourceServer 注解<br/><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image" height="250" src="attachments/8787493/8787494.png" data-image-src="attachments/8787493/8787494.png" data-unresolved-comment-count="0" data-linked-resource-id="8787494" data-linked-resource-version="2" data-linked-resource-type="attachment" data-linked-resource-default-alias="image2022-1-2_16-25-9.png" data-base-url="http://wiki.itjcloud.com" data-linked-resource-content-type="image/png" data-linked-resource-container-id="8787493" data-linked-resource-container-version="37"></span></span></p><h3 id="id-资源服务器对接(弃用)-5.获取用户信息工具ItjCloudSecurityUtil"><span style="color: rgb(158,136,13);"><br/><br/><span style="color: rgb(0,0,0);">5.获取用户信息工具    </span></span><span style="color: rgb(0,0,0);">ItjCloudSecurityUtil</span></h3><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: yml; gutter: false; theme: Emacs" data-theme="Emacs">//实例  下图详细方法使用
+String currentUsername = ItjCloudSecurityUtil.getCurrentUsername();</pre>
+</div></div><p><br/></p><p><span style="color: rgb(158,136,13);"><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image" width="800" src="attachments/8787493/8787496.png" data-image-src="attachments/8787493/8787496.png" data-unresolved-comment-count="0" data-linked-resource-id="8787496" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="image2022-1-2_16-28-24.png" data-base-url="http://wiki.itjcloud.com" data-linked-resource-content-type="image/png" data-linked-resource-container-id="8787493" data-linked-resource-container-version="37"></span><br/></span></p><h3 id="id-资源服务器对接(弃用)-6.如何控制权限">6.如何控制权限</h3><p><br/></p><p>后端资源权限控制使用Spring Cloud Security权限注解控制，比如下面这个资源只有拥有&quot;user:add&quot;权限的用户可以访问：</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Emacs" data-theme="Emacs">@PostMapping
+@PreAuthorize(&quot;hasAnyAuthority(&#39;user:add&#39;)&quot;)
+public void addUser(User user) throws FebsException {
+     this.userService.createUser(user);
+}</pre>
+</div></div><p><br/></p><p><code>
+</code></p><p>如果用户没有这个权限的话，访问该资源会返回403状态码。</p><p>更多注解可以参考：<a href="http://wiki.itjcloud.com/pages/viewpage.action?pageId=8787708" rel="nofollow">更多可用注解</a>。</p><h3 id="id-资源服务器对接(弃用)-7.">7.<a href="8786201.html">租户隔离</a></h3><p><br/></p><h3 id="id-资源服务器对接(弃用)-8.feign的token传递">8.<a href="http://wiki.itjcloud.com/pages/viewpage.action?pageId=65729#id-1.%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%B7%B1%E7%9A%84%E5%AD%90%E7%B3%BB%E7%BB%9F-%E7%AC%AC%E4%BA%94%E6%AD%A5%E6%9C%8D%E5%8A%A1%E9%97%B4%E8%B0%83%E7%94%A8fegin" rel="nofollow">feign的token传递</a></h3><p><br/></p>
+                    </div>
+
+                                                            <div class="pageSection group">
+                        <div class="pageSectionHeader">
+                            <h2 id="attachments" class="pageSectionTitle">Attachments:</h2>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/8787493/8788996.png">image2022-1-2_16-25-9.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/8787493/8787496.png">image2022-1-2_16-28-24.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/8787493/8787500.png">image2022-1-2_16-42-20.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/8787493/8787501.png">image2022-1-2_16-42-33.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/8787493/8787508.json">认证中心对接.postman_collection.json</a> (application/octet-stream)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/8787493/8787510.json">认证中心对接.postman_collection.json</a> (application/octet-stream)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/8787493/8788708.json">认证中心对接.postman_collection.json</a> (application/octet-stream)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/8787493/8789587.json">认证中心对接.postman_collection.json</a> (application/octet-stream)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/8787493/8788753.png">image2022-1-20_15-38-12.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/8787493/8788756.png">image2022-1-20_15-39-21.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/8787493/8788760.png">image2022-1-20_17-43-57.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/8787493/8787494.png">image2022-1-2_16-25-9.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/8787493/8789559.png">image2022-2-7_17-21-12.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/8787493/8789584.png">image2022-2-8_8-57-33.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/8787493/8787502.json">认证中心对接.postman_collection.json</a> (application/octet-stream)
+                                <br/>
+                                                    </div>
+                    </div>
+                    
+                                                      
+                </div>             </div> 
+            <div id="footer" role="contentinfo">
+                <section class="footer-body">
+                    <p>Document generated by Confluence on 八月 30, 2022 17:10</p>
+                    <div id="footer-logo"><a href="http://www.atlassian.com/">Atlassian</a></div>
+                </section>
+            </div>
+        </div>     </body>
+</html>

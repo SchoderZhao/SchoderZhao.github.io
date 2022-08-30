@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>java公共组件 : 21.Loadbalanced智能路由环境隔离</title>
+        <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body class="theme-default aui-theme-default">
+        <div id="page">
+            <div id="main" class="aui-page-panel">
+                <div id="main-header">
+                    <div id="breadcrumb-section">
+                        <ol id="breadcrumbs">
+                            <li class="first">
+                                <span><a href="index.html">java公共组件</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="1409212.html">java公共组件</a></span>
+                            </li>
+                                                </ol>
+                    </div>
+                    <h1 id="title-heading" class="pagetitle">
+                                                <span id="title-text">
+                            java公共组件 : 21.Loadbalanced智能路由环境隔离
+                        </span>
+                    </h1>
+                </div>
+
+                <div id="content" class="view">
+                    <div class="page-metadata">
+                        
+        
+    
+        
+    
+        
+        
+            Created by <span class='author'> 张印港</span>, last modified on 一月 25, 2022
+                        </div>
+                    <div id="main-content" class="wiki-content group">
+                    <hr/><p>date updated: 2022-01-20 16:30<br/>tag:</p><ul><li>灰度发布</li></ul><hr/><h1 id="id-21.Loadbalanced智能路由环境隔离-springcloudloadbalancer配置路由策略">spring cloud loadbalancer配置路由策略</h1><p><span class="confluence-embedded-file-wrapper"><img class="confluence-embedded-image confluence-external-resource" src="https://typora123.oss-cn-qingdao.aliyuncs.com/img/027c544614a788d95565ba3558a851cd.png" data-image-src="https://typora123.oss-cn-qingdao.aliyuncs.com/img/027c544614a788d95565ba3558a851cd.png"></span></p><h2 id="id-21.Loadbalanced智能路由环境隔离-前端使用">前端使用</h2><p><span class="confluence-embedded-file-wrapper"><img class="confluence-embedded-image confluence-external-resource" alt="配置请求头示例" src="https://typora123.oss-cn-qingdao.aliyuncs.com/img/806544621fa837154bb0e18df866a290.png" data-image-src="https://typora123.oss-cn-qingdao.aliyuncs.com/img/806544621fa837154bb0e18df866a290.png"></span></p><h2 id="id-21.Loadbalanced智能路由环境隔离-后端配置">后端配置</h2><h3 id="id-21.Loadbalanced智能路由环境隔离-引入包">引入包</h3><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: groovy; gutter: true; theme: Confluence; collapse: false" data-theme="Confluence">implementation &quot;com.itjcloud.common:common-loadbalancer-starter:${itjcloudVersion}&quot;
+</pre>
+</div></div><h3 id="id-21.Loadbalanced智能路由环境隔离-配置文件">配置文件</h3><p><strong>必须</strong>: active环境配置必须为, <code>dev</code> , <code>test</code>, <code>local</code> 否则策略不生效</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: plain; gutter: true; theme: Confluence; collapse: false" data-theme="Confluence">spring:
+  profiles:
+    #运维部署
+    active: dev
+</pre>
+</div></div><p><strong>其他配置</strong>: 配置版本号和过滤虚拟网卡</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: yaml; gutter: true; theme: Confluence; collapse: false" data-theme="Confluence">spring:
+cloud:
+  inetutils:
+    ignored-interfaces: [ &#39;VMware.*&#39; ]    # 防止虚拟机网卡注册到nacos中,window专属福利
+  nacos:
+    discovery:
+      server-addr: 121.36.195.180:8848
+      namespace: dev
+      group: dev
+      metadata:
+        version: 1.0.0   # 配置版本号
+</pre>
+</div></div><p><strong>注意配置文件一定要添加 {{ ignored-interfaces: [ 'VMware.</strong>' ]}} 防止虚拟机ip地址注册到nacos,无法访问*</p><p>这个配置的作用是用来配置 nacos 的数据, 配置效果如下图:</p><p><span class="confluence-embedded-file-wrapper"><img class="confluence-embedded-image confluence-external-resource" src="https://typora123.oss-cn-qingdao.aliyuncs.com/img/e5a7a84317155b1bd745b53015ccd435.png" data-image-src="https://typora123.oss-cn-qingdao.aliyuncs.com/img/e5a7a84317155b1bd745b53015ccd435.png"></span></p><p>项目中默认启用两种路由策略</p><h3 id="id-21.Loadbalanced智能路由环境隔离-ip匹配">ip 匹配</h3><blockquote><p>如果请求头里包含 Ip:xxx.xxx.xxx.xxx 字段那么请求会优先匹配 ip</p></blockquote><p>如下图</p><p><span class="confluence-embedded-file-wrapper"><img class="confluence-embedded-image confluence-external-resource" src="https://typora123.oss-cn-qingdao.aliyuncs.com/img/20220120091219.png" data-image-src="https://typora123.oss-cn-qingdao.aliyuncs.com/img/20220120091219.png"></span></p><h3 id="id-21.Loadbalanced智能路由环境隔离-版本匹配">版本匹配</h3><p><span class="confluence-embedded-file-wrapper"><img class="confluence-embedded-image confluence-external-resource" src="https://typora123.oss-cn-qingdao.aliyuncs.com/img/20220119183701.png" data-image-src="https://typora123.oss-cn-qingdao.aliyuncs.com/img/20220119183701.png"></span><br/>如果请求头里包含 <code>version:xxx</code> 字段, 那么就会去匹配符合版本的服务</p><p>注意:</p><blockquote><p>如果 ip 和版本同时存在以 ip 为第一优先级</p></blockquote><p>h3. 其他</p><p>如果需要对策略进行扩展开发,可以看<a class="createlink" href="/pages/createpage.action?spaceKey=common&amp;title=loadBalancer%E8%B7%AF%E7%94%B1%E7%AD%96%E7%95%A5%E6%89%A9%E5%B1%95%E5%BC%80%E5%8F%91.md&amp;linkCreation=true&amp;fromPageId=8788587">loadBalancer路由策略扩展开发</a>配合源码使用更香</p><ul><li>更多相关的知识可以看<a class="createlink" href="/pages/createpage.action?spaceKey=common&amp;title=%E5%90%8E%E7%AB%AF%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%A4%9A%E7%8E%AF%E5%A2%83%E6%B2%BB%E7%90%86%E5%AE%9E%E8%B7%B5.md&amp;linkCreation=true&amp;fromPageId=8788587">后端微服务多环境治理实践</a>和 相关内容<a class="external-link" href="https://zhuanlan.zhihu.com/p/400100099" rel="nofollow">知乎</a> <a class="external-link" href="https://zhuanlan.zhihu.com/p/400100099" rel="nofollow">^2</a> 相关的内容,这个就是微服务相关的附件</li></ul>
+                    </div>
+
+                                                            <div class="pageSection group">
+                        <div class="pageSectionHeader">
+                            <h2 id="attachments" class="pageSectionTitle">Attachments:</h2>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/8788587/8788686.png">image2022-1-18_21-17-26.png</a> (image/png)
+                                <br/>
+                                                    </div>
+                    </div>
+                    
+                                                      
+                </div>             </div> 
+            <div id="footer" role="contentinfo">
+                <section class="footer-body">
+                    <p>Document generated by Confluence on 八月 30, 2022 17:10</p>
+                    <div id="footer-logo"><a href="http://www.atlassian.com/">Atlassian</a></div>
+                </section>
+            </div>
+        </div>     </body>
+</html>

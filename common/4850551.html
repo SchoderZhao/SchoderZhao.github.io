@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>java公共组件 : 18.基于rabbitMq的延时消息队列使用</title>
+        <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body class="theme-default aui-theme-default">
+        <div id="page">
+            <div id="main" class="aui-page-panel">
+                <div id="main-header">
+                    <div id="breadcrumb-section">
+                        <ol id="breadcrumbs">
+                            <li class="first">
+                                <span><a href="index.html">java公共组件</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="1409212.html">java公共组件</a></span>
+                            </li>
+                                                </ol>
+                    </div>
+                    <h1 id="title-heading" class="pagetitle">
+                                                <span id="title-text">
+                            java公共组件 : 18.基于rabbitMq的延时消息队列使用
+                        </span>
+                    </h1>
+                </div>
+
+                <div id="content" class="view">
+                    <div class="page-metadata">
+                        
+        
+    
+        
+    
+        
+        
+            Created by <span class='author'> 张印港</span>, last modified on 十二月 23, 2021
+                        </div>
+                    <div id="main-content" class="wiki-content group">
+                    <h2 id="开发环境"><a href="#开发环境"><strong>开发环境</strong></a></h2> 
+<p><strong>rabbitMq &#43; rabbitmq_delayed_message_exchange &#43; java1.8 &#43; spring cloud 2021.x</strong></p> 
+<pre><code class="language-ad-info">title: 注意事项
+延时队列基于 rabbitmq_delayed_message_exchange插件实现如果使用延时队列一定要安装插件
+默认是使用的amqp的路由模式,可自己根据需要进行扩展
+</code></pre> 
+<h3 id="第一步-添加依赖"><a href="#第一步-添加依赖"><strong>第一步: 添加依赖</strong></a></h3> 
+<pre><code class="language-groovy">implementation &#34;com.itjcloud.common:common-mq-starter:${itjcloudVersion}&#34;  
+implementation &#34;org.springframework.boot:spring-boot-starter-amqp:${springBootVersion}&#34;
+</code></pre> 
+<h3 id="第二步配置信息"><a href="#第二步配置信息">第二步:配置信息</a></h3> 
+<h4 id="yml配置"><a href="#yml配置">yml配置</a></h4> 
+<pre><code class="language-yaml">spring:
+  rabbitmq:
+    host: 192.168.90.71 # rabbitmq的连接地址
+    port: 5672 # rabbitmq的连接端口号
+    username: mall # rabbitmq的用户名
+    password: mall # rabbitmq的密码
+    config:
+        delayExchangeName: delay.exchange #默认延时交换机配置 必须配
+</code></pre> 
+<h4 id="生产者配置"><a href="#生产者配置">生产者配置</a></h4> 
+<pre><code class="language-java">
+&#64;EnableRabbit   //开启rabbitMq
+&#64;Configuration
+public class AmqpDelayQueueConfig {
+
+
+    /**
+     * binding工具用来绑定Queue和Exchange
+     *
+     * &#64;return 消息队列对象
+     */
+    &#64;Bean
+    public BindingExchangeQueue delayQueue() {
+        // CustomBindingExchangeQueueFactory是生成绑定对象工具类 当参数是一个的时候, 使用        消息队列名称作为routkey
+        return CustomBindingExchangeQueueFactory.create(&#34;zyg01&#34;);
+    }
+
+
+    /**
+     * 创建默认延时队列
+     *
+     * &#64;return 延时队列交换机
+     */
+    &#64;Bean(name &#61; &#34;customDelayExchange&#34;)
+    public CustomDelayExchange customDelayExchange() {
+        return new CustomDelayExchange(&#34;延时队列交换机名称&#34;);
+    }
+
+}
+
+</code></pre> 
+<h4 id="配置消费者"><a href="#配置消费者">配置消费者</a></h4> 
+<pre><code class="language-java">&#64;Configuration
+public class XdelayReceiver {
+    &#64;RabbitListener(queues &#61; &#34;zyg01&#34;)
+    public void get(String msg) {
+        SimpleDateFormat sdf &#61; new SimpleDateFormat(&#34;yyyy-MM-dd HH:mm:ss&#34;);
+        System.out.println(&#34;queue1&#xff1a;&#34; &#43; sdf.format(new Date()) &#43; &#34; Delay sent.&#34;);
+        System.out.println(&#34;queue1:&#34; &#43; msg);
+    }
+}
+</code></pre> 
+<h3 id="第三步配置生成者"><a href="#第三步配置生成者">第三步:配置生成者</a></h3> 
+<h3 id="简单模式"><a href="#简单模式">简单模式</a></h3> 
+<blockquote> 
+ <p>这个模式下 消息队列名称和routkey名称保持一致 交换机为默认延时队列交换机   <img src="https://typora123.oss-cn-qingdao.aliyuncs.com/img/image-20211223171054702.png" alt="image-20211223171054702" />   交换机为上一步默认配置的延时交换机</p> 
+</blockquote> 
+<ul><li>代码配置 <pre><code class="language-java">	&#64;EnableRabbit  
+	&#64;Configuration  
+	public class AmqpDelayQueueConfig {  
+
+	/**  
+	 * 简单模式 此模式下, 创建一个名称为 传入字符串 名称的  延时交换机, 消息队列 和 routKey都为string对象  
+	 * &#64;return  
+	 */  
+	&#64;Bean  
+	public BindingExchangeQueue delayQueue() {  
+
+	    return CustomBindingExchangeQueueFactory.create(&#34;zyg01&#34;);  
+	}
+
+
+	}
+
+</code></pre> </li></ul> 
+<h3 id="指定routkey模式"><a href="#指定routkey模式">指定routkey模式</a></h3> 
+<ul><li>代码 <pre><code class="language-java">&#64;EnableRabbit  
+&#64;Configuration  
+public class AmqpDelayQueueConfig {  
+
+
+
+&#64;Bean  
+public BindingExchangeQueue delayQueue1() {  
+      return 			CustomBindingExchangeQueueFactory.create(&#34;zyg01&#34;,&#34;123123&#34;);  
+}  
+
+}
+
+
+</code></pre> </li></ul> 
+<pre><code>
+### 通过构造器使用
+
+&#96;&#96;&#96;java
+&#64;Bean  
+public BindingExchangeQueue delayQueue3() {  
+    String key &#61; &#34;routkey&#34;;  
+ Queue queue &#61; new Queue(&#34;name&#34;, true);  
+ CustomDelayExchange customDelayExchange &#61; new CustomDelayExchange(&#34;name&#34;);  
+ Binding bind &#61; BindingBuilder.bind(queue).to(customDelayExchange).with(key).noargs();  
+ return new CustomBindingExchangeQueueImpl(customDelayExchange,queue,bind,key);  
+}
+
+</code></pre> 
+<h3 id="更多模式可以参考工具类或者完全自定义"><a href="#更多模式可以参考工具类或者完全自定义">更多模式可以参考工具类或者完全自定义</a></h3> 
+<h2 id="简单使用发送消息"><a href="#简单使用发送消息">简单使用发送消息</a></h2> 
+<ol><li>注入消息队列模板工具类</li></ol> 
+<pre><code class="language-java">&#64;Autowired
+private com.itjcloud.common.mq.manage.QueueTemplate queueTemplate;  
+</code></pre> 
+<ol><li>发送消息</li></ol> 
+<pre><code class="language-java">&#64;Test
+public void test() {
+
+	//使用默认消息交换机发送消息
+    delayQueueTemplate.send(&#34;zyg01&#34;,&#34;你好10秒&#34;,10,TimeUnit.SECONDS);
+    delayQueueTemplate.send(&#34;zyg01&#34;,&#34;你好6秒&#34;,6,TimeUnit.SECONDS);
+
+    //自定义交换机和routkey发送消息
+    AmqpDelayQueueMessage&lt;Object&gt; build &#61; AmqpDelayQueueMessage
+        .builder()
+        .message(&#34;消息&#34;)
+        .delay(10L)
+        .acceptName(&#34;接收者交换机&#34;)
+        .routName(&#34;消息key&#34;)
+        .timeUnit(TimeUnit.SECONDS)
+        .build();
+        delayQueueTemplate.convertAndSend(build);
+}
+
+
+</code></pre> 
+<h2 id="设计思路"><a href="#设计思路">设计思路</a></h2> 
+<blockquote> 
+ <p>延时队列设计和amqp协议的rabbitmq并无区别,使用方式也并无区别. 只不过为了方便开发使用提升开发效率, 添加了构建工具,以及延时队列需要的配置单独拿了出来 <img src="https://typora123.oss-cn-qingdao.aliyuncs.com/img/image-20211223170752707.png" alt="image-20211223170752707" />   - com.itjcloud.common.mq.core.CustomDelayExchange</p> 
+</blockquote> 
+<pre><code>**CustomDelayExchange**是继承了**AbstractExchange**抽象类的延时队列交换机
+用来代替原生的简单的Exchange交换机
+</code></pre> 
+<ul><li>com.itjcloud.common.mq.core.CustomBindingExchangeQueueImpl CustomBindingExchangeQueueImpl是延时交换机, 消息队列, 路由key 构建的一个实体 其中实现了BindingExchangeQueue接口, 只要这个对象在 <strong>spring</strong> 容器中就会通过 <strong>BeanPostProcessor</strong>后置执行器,把当前对象进行绑定放入到spring容器中中</li></ul><script>
+AJS.$('[data-macro-name="markdown"] code').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+</script><style>
+.hljs {display: inline;}
+pre > code {display: block !important;}
+</style>
+                    </div>
+
+                                                            <div class="pageSection group">
+                        <div class="pageSectionHeader">
+                            <h2 id="attachments" class="pageSectionTitle">Attachments:</h2>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/4850551/4854377.url">18.基于rabbitMq的延时消息队列使用.url</a> (application/octet-stream)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/4850551/4854376.url">18.基于rabbitMq的延时消息队列使用.url</a> (application/octet-stream)
+                                <br/>
+                                                    </div>
+                    </div>
+                    
+                                                      
+                </div>             </div> 
+            <div id="footer" role="contentinfo">
+                <section class="footer-body">
+                    <p>Document generated by Confluence on 八月 30, 2022 17:10</p>
+                    <div id="footer-logo"><a href="http://www.atlassian.com/">Atlassian</a></div>
+                </section>
+            </div>
+        </div>     </body>
+</html>

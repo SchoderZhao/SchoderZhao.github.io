@@ -1,0 +1,42 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+<form action="http://dingdongzhuanyong.obs.cn-east-3.myhuaweicloud.com/" method="post" enctype="multipart/form-data">
+Object key
+<!-- 对象名 -->
+<input type="text" name="key" value="新建文本文档" />
+
+<!-- policy的base64编码值 -->
+<input type="hidden" name="policy" value="eyJleHBpcmF0aW9uIjoiMjAyMS0wOS0yN1QwMjoxMToxNS4yNTJaIiwiY29uZGl0aW9ucyI6W3siYnVja2V0IjoiZGluZ2Rvbmd6aHVhbnlvbmcgIn0seyJrZXkiOiLmlrDlu7rmlofmnKzmlofmoaMifSxdfQ==" />
+<!-- AK -->
+<input type="hidden" name="AccessKeyId" value="M43RSE3ATTIFNFPURUP8"/>
+<!-- 签名串信息 -->
+<input type="hidden" name="signature" value="aR4ErBcMVd4jwBg9AYdtmugK93c="/>
+<button type="button" onclick ="doit()" >提交</button>
+<input name="file" type="file" />
+<input name="submit" value="Upload" type="submit" />
+<>
+</form>
+</body>
+</html>
+<script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+<script>
+function doit(){
+	$.ajax({
+		type: "POST",
+		url: "http://192.168.90.200:10302/obs/accessGet",
+		data: '{bucketName:"dingdongzhuanyong",dir:"新建文本文档"}',
+		contentType: "application/json;charset=utf-8",
+		dataType: "json",
+		success: function (data) {
+			$("input[name='policy']").val(data.Policy)
+			$("input[name='AccessKeyId']").val(data.Accesskeyid)
+			$("input[name='signature']").val(data.Signature)
+			$("input[name='submit']").trigger('click');
+		}, async: false
+	});
+}
+</script>

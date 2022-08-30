@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>java公共组件 : java公共组件</title>
+        <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body class="theme-default aui-theme-default">
+        <div id="page">
+            <div id="main" class="aui-page-panel">
+                <div id="main-header">
+                    <div id="breadcrumb-section">
+                        <ol id="breadcrumbs">
+                            <li class="first">
+                                <span><a href="index.html">java公共组件</a></span>
+                            </li>
+                                                </ol>
+                    </div>
+                    <h1 id="title-heading" class="pagetitle">
+                                                <span id="title-text">
+                            java公共组件 : java公共组件
+                        </span>
+                    </h1>
+                </div>
+
+                <div id="content" class="view">
+                    <div class="page-metadata">
+                        
+        
+    
+        
+    
+        
+        
+            Created by <span class='author'> 赵兴磊</span>, last modified on 三月 24, 2022
+                        </div>
+                    <div id="main-content" class="wiki-content group">
+                    <h2 id="java公共组件-引入准备">引入准备</h2><p><span style="color: rgb(255,0,0);"><strong>JDK1.8+Gradle</strong></span></p><h2 id="java公共组件-公共组件结构">公共组件结构 </h2><p>对应依赖包  <strong>     正式版<a class="external-link" href="https://gitee.com/yuezhix/itjcloud-common/releases" rel="nofollow">https://gitee.com/yuezhix/itjcloud-common/releases</a> (使用正式版) 快照版 1.1.1-SNAPSHOT </strong></p><p>itjcloud-common</p><p>├─common-alert ------ <a href="4849991.html">钉钉群机器人风险报警</a><br/>├─common-core ------ 系统核心依赖包<br/>├─common-datasource-starter ------ 系统数据库自动装配starter<br/>├─common-logging-starter ------ 微服务子系统logback日志自动装配starter<br/>├─common-redis-starter ------ <a href="65697.html">Redis自动装配starter 分布式锁/redis的基本操作</a></p><p>├─common-j2cache-starter ------ <a href="65755.html">数据字典管理，以及实现 二级缓存 j2cache</a></p><p>├─common-security-starter ------  <a href="4554756.html">微服务子系统安全配置自动装配starter</a></p><p>├─common-util-starter ------  <a href="4850136.html">接口版本化控制</a> <a href="4850148.html">多端访问控制starter</a></p><p>└─common-mq-starter ------ <a href="http://wiki.itjcloud.com/pages/viewpage.action?pageId=4850551" rel="nofollow">基于rabbitMq的延时消息队列使用</a></p><p><br/></p><h2 id="java公共组件-itjcloud-common技术选型">itjcloud-common 技术选型   </h2><div class="table-wrap"><table class="wrapped relative-table confluenceTable" style="width: 77.4547%;"><colgroup><col style="width: 10.1025%;"/><col style="width: 47.5283%;"/><col style="width: 11.6185%;"/><col style="width: 30.7506%;"/></colgroup><tbody><tr><td colspan="1" class="confluenceTd"><br/></td><td colspan="1" class="confluenceTd">描述</td><td colspan="1" class="confluenceTd">所在依赖包</td><td colspan="1" class="confluenceTd">参考文档</td></tr><tr><td class="confluenceTd"><div class="content-wrapper"><p>Springboot</p></div></td><td class="confluenceTd"><p>版本 2.5.4</p></td><td colspan="1" class="confluenceTd">common-core</td><td colspan="1" class="confluenceTd"><br/></td></tr><tr><td class="confluenceTd"><p>springCloud</p></td><td class="confluenceTd"><p>版本 2020.0.3</p></td><td colspan="1" class="confluenceTd">common-core</td><td colspan="1" class="confluenceTd"><br/></td></tr><tr><td class="confluenceTd"><p>springCloudAlibaba</p></td><td class="confluenceTd"><p>版本 2021.1</p></td><td colspan="1" class="confluenceTd">common-core</td><td colspan="1" class="confluenceTd"><br/></td></tr><tr><td class="confluenceTd"><p>Hutool</p></td><td class="confluenceTd"><p>Java工具包类库，对文件、流、加密解密、转码、正则、线程、XML等JDK方法进行封装，组成各种Util工具类</p></td><td colspan="1" class="confluenceTd">common-core</td><td colspan="1" class="confluenceTd"><a class="external-link" href="https://hutool.cn/docs/#/" rel="nofollow">https://hutool.cn/docs/#/</a></td></tr><tr><td class="confluenceTd"><p>Mapstruct</p></td><td class="confluenceTd"><p>实体映射工具</p></td><td colspan="1" class="confluenceTd">common-core</td><td colspan="1" class="confluenceTd"><a href="65805.html">8.mapstruct BO,VO,DO, DTO转换工具</a></td></tr><tr><td class="confluenceTd"><p>Validation</p></td><td class="confluenceTd"><p>数据校验工具</p></td><td colspan="1" class="confluenceTd">common-core</td><td colspan="1" class="confluenceTd"><a href="65721.html">4.后端数据校验common_validation</a></td></tr><tr><td class="confluenceTd"><p>Redisson</p></td><td class="confluenceTd"><p>分布式锁已集成到 common-redis-starter项目,注解形式使用</p></td><td colspan="1" class="confluenceTd">common-redis-starter</td><td colspan="1" class="confluenceTd"><a href="65697.html">5.redis的基本操作以及分布式锁使用</a></td></tr><tr><td class="confluenceTd"><p>easyExcel</p></td><td class="confluenceTd"><p>阿里提供的基于Java的简单、省内存的读写Excel的工具</p></td><td colspan="1" class="confluenceTd">common-core</td><td colspan="1" class="confluenceTd"><br/></td></tr><tr><td class="confluenceTd"><p>Cosid</p></td><td class="confluenceTd"><p>通用、灵活、高性能的分布式 ID 生成器</p></td><td colspan="1" class="confluenceTd">common-core</td><td colspan="1" class="confluenceTd"><br/></td></tr><tr><td class="confluenceTd"><p>smartDoc+torna</p></td><td class="confluenceTd"><p>是一款同时支持JAVA REST API和Apache Dubbo RPC接口文档生成的工具</p></td><td colspan="1" class="confluenceTd">common-core</td><td colspan="1" class="confluenceTd"><a href="65703.html">3.接口文档工具说明</a></td></tr><tr><td class="confluenceTd"><p>mybatisPlus</p></td><td class="confluenceTd"><p>MyBatis的增强工具</p></td><td colspan="1" class="confluenceTd">common-core</td><td colspan="1" class="confluenceTd"><a class="external-link" href="https://mp.baomidou.com/" rel="nofollow">https://mp.baomidou.com/</a></td></tr><tr><td class="confluenceTd"><p>dynamicDatasource</p></td><td class="confluenceTd"><p>一个基于springboot的快速集成多数据源的启动器 提供并简化对Druid，HikariCp，BeeCp,Dbcp2的快速集成</p></td><td colspan="1" class="confluenceTd">common-core</td><td colspan="1" class="confluenceTd"><a class="external-link" href="https://baomidou.com/pages/a61e1b/" rel="nofollow">https://baomidou.com/pages/a61e1b/</a></td></tr><tr><td colspan="1" class="confluenceTd"><br/></td><td colspan="1" class="confluenceTd">分布式事务seata</td><td colspan="1" class="confluenceTd">common-core</td><td colspan="1" class="confluenceTd"><a href="4850364.html">17.分布式事务seata</a></td></tr></tbody></table></div><h2 id="java公共组件-项目打包"><span style="letter-spacing: -0.008em;">项目打包</span></h2><p><span class="confluence-embedded-file-wrapper"><img class="confluence-embedded-image confluence-external-resource" src="attachments/1409212/1409287.png" data-image-src="http://wiki.itjcloud.com/download/attachments/1409212/image2021-9-27_9-50-51.png?version=1&amp;modificationDate=1632707452436&amp;api=v2"></span></p>
+                    </div>
+
+                                                            <div class="pageSection group">
+                        <div class="pageSectionHeader">
+                            <h2 id="attachments" class="pageSectionTitle">Attachments:</h2>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/1409212/1409287.png">image2021-9-27_9-50-51.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/1409212/8782045.url">Confluence.url</a> (application/octet-stream)
+                                <br/>
+                                                    </div>
+                    </div>
+                    
+                                                      
+                </div>             </div> 
+            <div id="footer" role="contentinfo">
+                <section class="footer-body">
+                    <p>Document generated by Confluence on 八月 30, 2022 17:10</p>
+                    <div id="footer-logo"><a href="http://www.atlassian.com/">Atlassian</a></div>
+                </section>
+            </div>
+        </div>     </body>
+</html>
