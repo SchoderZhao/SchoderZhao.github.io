@@ -1,34 +1,36 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>视频预览</title>
-	<style>
-		/* 限制视频高度，并使其按比例缩放以适应页面的宽度 */
-		#myVideo {
-			max-width: 100%;
-			height: auto;
-		}
-	</style>
-</head>
-<body>
-	<video id="myVideo" controls>
-		<source id="videoSource" src="" type="video/mp4">
-		您的浏览器不支持HTML5视频。
-	</video>
+	<head>
+		<title>视频预览</title>
+		<style>
+			/* 限制视频高度，并使其按比例缩放以适应页面的宽度 */
+			#myVideo {
+				max-width: 100%;
+				height: auto;
+			}
+		</style>
+		<meta name="viewport"
+			content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	</head>
+	<body>
+		<video id="myVideo" controls>
+			<source id="videoSource" src="" type="video/mp4">
+			您的浏览器不支持HTML5视频。
+		</video>
 
-	<script>
-		// 获取URL参数中的视频地址
-		const urlParams = new URLSearchParams(window.location.search);
-		const videoUrl = urlParams.get('video');
+		<script>
+			// 获取URL参数中的视频地址
+			const urlParams = new URLSearchParams(window.location.search);
+			const videoUrl = urlParams.get('video');
 
-		// 将视频地址设置为<video>标签的src属性
-		const videoSource = document.getElementById('videoSource');
-		videoSource.setAttribute('src', videoUrl);
+			// 将视频地址设置为<video>标签的src属性
+			const videoSource = document.getElementById('videoSource');
+			videoSource.setAttribute('src', videoUrl);
 
-		// 播放视频
-		const myVideo = document.getElementById('myVideo');
-		myVideo.load();
-		myVideo.play();
-	</script>
-</body>
+			// 播放视频
+			const myVideo = document.getElementById('myVideo');
+			myVideo.load();
+			myVideo.play();
+		</script>
+	</body>
 </html>
