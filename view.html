@@ -1,39 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Video List</title>
+  <meta charset="UTF-8">
+  <title>Video List</title>
 </head>
 <body>
-	<h1>Video List</h1>
-	<div id="video-list"></div>
-	<script>
-		// Specify the path to the folder containing the videos
-		var folderPath = "video/";
-		
-		// Send an HTTP GET request to the folder URL
-		var xhr = new XMLHttpRequest();
-		xhr.open('GET', folderPath);
-		xhr.onload = function() {
-			if (xhr.status === 200) {
-				// Extract the video file URLs from the response
-				var videoUrls = xhr.responseText.match(/href="(.*\.mp4)"/g);
-				if (videoUrls) {
-					// Generate a list of video links
-					var videoList = "<ul>";
-					for (var i = 0; i < videoUrls.length; i++) {
-						var videoUrl = videoUrls[i].replace(/href="(.*)"/, "$1");
-						videoList += "<li><a href=\"" + folderPath + videoUrl + "\">" + videoUrl + "</a></li>";
-					}
-					videoList += "</ul>";
-					document.getElementById("video-list").innerHTML = videoList;
-				} else {
-					document.getElementById("video-list").innerHTML = "<p>No videos found.</p>";
-				}
-			} else {
-				document.getElementById("video-list").innerHTML = "<p>Error loading videos.</p>";
-			}
-		};
-		xhr.send();
-	</script>
+  <h1>Video List</h1>
+  <ul id="video-list"></ul>
+
+  <script>
+    const folder = "video"; // 要获取的文件夹名称
+    const videoList = document.getElementById("video-list");
+
+    fetch(`/${folder}/`)
+      .then(response => response.text())
+      .then(data => {
+        const parser = new DOMParser();
+        const htmlDocument = parser.parseFromString(data, "text/html");
+        const links = htmlDocument.querySelectorAll("a");
+        for (let i = 0; i < links.length; i++) {
+          const link = links[i];
+          if (link.href.endsWith(".mp4")) {
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.textContent = link.href;
+            a.href = `/${folder}/${link.href}`;
+            li.appendChild(a);
+            videoList.appendChild(li);
+          }
+        }
+      });
+  </script>
 </body>
 </html>
