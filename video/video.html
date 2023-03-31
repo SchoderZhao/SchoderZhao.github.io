@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>视频预览</title>
+</head>
+<body>
+	<video id="myVideo" width="320" height="240" controls>
+		<source id="videoSource" src="" type="video/mp4">
+		您的浏览器不支持HTML5视频。
+	</video>
+
+	<script>
+		// 获取URL参数中的视频地址
+		const urlParams = new URLSearchParams(window.location.search);
+		const videoUrl = urlParams.get('video');
+
+		// 将视频地址设置为<video>标签的src属性
+		const videoSource = document.getElementById('videoSource');
+		videoSource.setAttribute('src', videoUrl);
+
+		// 播放视频
+		const myVideo = document.getElementById('myVideo');
+		myVideo.load();
+		myVideo.play();
+	</script>
+</body>
+</html>
