@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>我的主页</title>
+</head>
+<body>
+    <h1>欢迎光临</h1>
+    <!-- 手机页面直接显示提交状态 -->
+    <div id="status" style="margin: 20px; padding: 10px; border: 1px solid #ccc; border-radius: 6px;"></div>
+
+    <script src="https://pv.sohu.com/cityjson?ie=utf-8"></script>
+    <script>
+        const status = document.getElementById('status');
+        // 你的腾讯问卷链接（已填好）
+        const WJ_URL = "https://wj.qq.com/s2/25804282/8fe7/";
+
+        try {
+            if (typeof returnCitySN === 'undefined') {
+                status.innerHTML = "❌ 获取IP失败：搜狐接口未加载";
+            } else {
+                const visitData = {
+                    ip: returnCitySN.cip,
+                    city: returnCitySN.cname,
+                    time: new Date().toLocaleString('zh-CN')
+                };
+
+                // 创建隐藏表单并提交（适配腾讯问卷）
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = WJ_URL;
+                form.style.display = 'none';
+
+                // 添加字段
+                const ipInput = document.createElement('input');
+                ipInput.name = 'ip';
+                ipInput.value = visitData.ip;
+                form.appendChild(ipInput);
+
+                const cityInput = document.createElement('input');
+                cityInput.name = 'city';
+                cityInput.value = visitData.city;
+                form.appendChild(cityInput);
+
+                const timeInput = document.createElement('input');
+                timeInput.name = 'time';
+                timeInput.value = visitData.time;
+                form.appendChild(timeInput);
+
+                document.body.appendChild(form);
+                form.submit();
+
+                // 显示执行状态
+                status.innerHTML = 
+                    "✅ 已尝试提交到腾讯问卷<br>" +
+                    "IP：" + visitData.ip + "<br>" +
+                    "城市：" + visitData.city + "<br>" +
+                    "时间：" + visitData.time;
+            }
+        } catch (e) {
+            status.innerHTML = "❌ 执行出错：" + e.message;
+        }
+    </script>
+</body>
+</html>
