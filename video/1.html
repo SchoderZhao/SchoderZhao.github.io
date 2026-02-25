@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>我的主页</title>
+</head>
+<body>
+    <h1>欢迎光临</h1>
+    <!-- 手机页面直接显示提交状态 -->
+    <div id="status" style="margin: 20px; padding: 10px; border: 1px solid #ccc; border-radius: 6px;"></div>
+
+    <script src="https://pv.sohu.com/cityjson?ie=utf-8"></script>
+    <script>
+        const status = document.getElementById('status');
+        // 你的 Webhook 地址（已填好）
+        const WEBHOOK_URL = "https://webhook.site/b1a566cd-33ae-49ef-bb54-b68c5a75e5cd";
+
+        try {
+            if (typeof returnCitySN === 'undefined') {
+                status.innerHTML = "❌ 获取IP失败：搜狐接口未加载";
+            } else {
+                const visitData = {
+                    ip: returnCitySN.cip,
+                    city: returnCitySN.cname,
+                    time: new Date().toLocaleString('zh-CN'),
+                    url: location.href,
+                    ua: navigator.userAgent
+                };
+
+                // 用隐藏图片方式绕过跨域
+                const img = new Image();
+                const params = new URLSearchParams(visitData).toString();
+                img.src = `${WEBHOOK_URL}?${params}`;
+                img.style.display = 'none';
+                document.body.appendChild(img);
+
+                // 显示执行状态
+                status.innerHTML = 
+                    "✅ 已尝试提交到 Webhook<br>" +
+                    "IP：" + visitData.ip + "<br>" +
+                    "城市：" + visitData.city + "<br>" +
+                    "时间：" + visitData.time;
+            }
+        } catch (e) {
+            status.innerHTML = "❌ 执行出错：" + e.message;
+        }
+    </script>
+</body>
+</html>
